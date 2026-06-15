@@ -218,6 +218,19 @@ export default function CustomDrawerContent(props: any) {
                   {user.email}
                 </Text>
               </View>
+              <TouchableOpacity
+                style={[
+                  styles.avatar,
+                  {
+                    borderRadius: 50,
+                    backgroundColor: "rgba(239, 68, 68, 0.08)",
+                    borderColor: "rgba(239, 68, 68, 0.2)",
+                  },
+                ]}
+                onPress={handleLogout}
+              >
+                <LogoutIcon color="#EF4444" />
+              </TouchableOpacity>
             </View>
 
             <TouchableOpacity
@@ -228,7 +241,6 @@ export default function CustomDrawerContent(props: any) {
                   borderColor: "rgba(239, 68, 68, 0.2)",
                 },
               ]}
-              onPress={handleLogout}
               activeOpacity={0.7}
             >
               <LogoutIcon color="#EF4444" />
