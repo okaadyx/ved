@@ -1,4 +1,5 @@
 import { AxiosInstance } from "axios";
+import { saveToken } from "../../utils/auth";
 
 export interface RegisterRequest {
   name: string;
@@ -38,12 +39,20 @@ export class UserApi {
     this.client = client;
   }
 
-  register(data: RegisterRequest) {
-    return this.client.post<AuthResponse>("/user/register", data);
+  async register(data: RegisterRequest) {
+    const response = await this.client.post<AuthResponse>("/user/register", data);
+    if (response.data && response.data.data && response.data.data.token) {
+      await saveToken(response.data.data.token);
+    }
+    return response;
   }
 
-  login(data: LoginRequest) {
-    return this.client.post<AuthResponse>("/user/login", data);
+  async login(data: LoginRequest) {
+    const response = await this.client.post<AuthResponse>("/user/login", data);
+    if (response.data && response.data.data && response.data.data.token) {
+      await saveToken(response.data.data.token);
+    }
+    return response;
   }
 
   user() {

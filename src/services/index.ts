@@ -1,11 +1,45 @@
 import axios, { AxiosInstance } from "axios";
+import * as SecureStore from "expo-secure-store";
+import { UserApi } from "./user";
+import { RagApi } from "./rag";
 
-class Api {
-    axiosClient: AxiosInstance;
+const TOKEN_KEY = "auth_token";
 
-    constructor(){
-        this.axiosClient = axios.create({
-            baseURL: ""
-        });
-    }
+export class Api {
+  axiosClient: AxiosInstance;
+  user: UserApi;
+  rag: RagApi;
+
+  constructor(baseURL: string = "http://192.168.1.4:3000") {
+    this.axiosClient = axios.create({
+      baseURL,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    // Add interceptor to dynamically inject the auth token on every request
+    this.axiosClient.interceptors.request.use(
+      async (config) => {
+        try {
+          const token = await SecureStore.getItemAsync(TOKEN_KEY);
+          if (token) {
+            config.headers["Authorization"] = `Bearer ${token}`;
+          }
+        } catch (error) {
+          console.error("Error retrieving token in request interceptor:", error);
+        }
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
+      }
+    );
+
+    this.user = new UserApi(this.axiosClient);
+    this.rag = new RagApi(this.axiosClient);
+  }
 }
+
+export const api = new Api();
+export default api;

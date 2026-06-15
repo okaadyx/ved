@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { FlatList } from "react-native";
 import axios from "axios";
 import { Message } from "@/types/chat";
+import { getToken } from "@/utils/auth";
 
 const getApiUrl = () => {
   return "http://192.168.1.4:3000";
@@ -16,6 +17,10 @@ const getWsUrl = () => {
 let cachedToken: string | null = null;
 
 const fetchToken = async (): Promise<string> => {
+  // Try to use the securely stored session token first
+  const storedToken = await getToken();
+  if (storedToken) return storedToken;
+
   if (cachedToken) return cachedToken;
 
   const apiUrl = getApiUrl();

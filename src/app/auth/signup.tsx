@@ -18,55 +18,73 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { z } from "zod";
+
+const signupSchema = z
+  .object({
+    name: z.string().trim().min(1, "Please fill in all fields."),
+    email: z
+      .string()
+      .trim()
+      .min(1, "Please fill in all fields.")
+      .email("Please enter a valid email address."),
+    password: z
+      .string()
+      .min(1, "Please fill in all fields.")
+      .min(6, "Password must be at least 6 characters."),
+    confirmPassword: z.string().min(1, "Please fill in all fields."),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match.",
+    path: ["confirmPassword"],
+  });
+
+import { useRegisterMutation } from "@/hooks/queries";
+
 export default function SignupScreen() {
   const scheme = useColorScheme();
   const theme = Colors[scheme === "dark" ? "dark" : "light"];
 
-  // Form State
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const registerMutation = useRegisterMutation();
 
   const handleSignup = () => {
     setError(null);
 
-    // Validation checks
-    if (!name.trim() || !email.trim() || !password.trim() || !confirmPassword.trim()) {
-      setError("Please fill in all fields.");
+    const validation = signupSchema.safeParse({
+      name,
+      email,
+      password,
+      confirmPassword,
+    });
+    if (!validation.success) {
+      setError(validation.error.issues[0].message);
       return;
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setError("Please enter a valid email address.");
-      return;
-    }
-
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters.");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      setError("Passwords do not match.");
-      return;
-    }
-
-    setIsLoading(true);
-
-    // Simulate Auth Registration API call
-    setTimeout(() => {
-      setIsLoading(false);
-      router.replace("/drawer/index" as any);
-    }, 1500);
+    registerMutation.mutate(
+      { name, email, password },
+      {
+        onSuccess: () => {
+          router.replace("/drawer/index" as any);
+        },
+        onError: (err: any) => {
+          const errMsg =
+            err.response?.data?.message || err.message || "Registration failed.";
+          setError(errMsg);
+        },
+      }
+    );
   };
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-      {/* Background Aurora Mesh Glows */}
+
       <AuthBackground />
 
       <SafeAreaView style={styles.safeArea}>
@@ -79,7 +97,7 @@ export default function SignupScreen() {
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled"
           >
-            {/* Back Button */}
+
             <TouchableOpacity
               style={[styles.backButton, { backgroundColor: theme.backgroundElement }]}
               onPress={() => router.back()}
@@ -88,7 +106,6 @@ export default function SignupScreen() {
               <BackIcon color={theme.text} />
             </TouchableOpacity>
 
-            {/* Header Section */}
             <View style={styles.header}>
               <Text style={[styles.title, { color: theme.text }]}>Create Account</Text>
               <Text style={[styles.subtitle, { color: theme.textSecondary }]}>
@@ -96,7 +113,6 @@ export default function SignupScreen() {
               </Text>
             </View>
 
-            {/* Form Fields */}
             <View style={styles.form}>
               {error && (
                 <View style={styles.errorAlert}>
@@ -104,7 +120,6 @@ export default function SignupScreen() {
                 </View>
               )}
 
-              {/* Name Field */}
               <AuthInput
                 label="Full Name"
                 theme={theme}
@@ -118,7 +133,6 @@ export default function SignupScreen() {
                 )}
               />
 
-              {/* Email Field */}
               <AuthInput
                 label="Email Address"
                 theme={theme}
@@ -133,7 +147,6 @@ export default function SignupScreen() {
                 )}
               />
 
-              {/* Password Field */}
               <AuthInput
                 label="Password"
                 theme={theme}
@@ -148,7 +161,7 @@ export default function SignupScreen() {
                 )}
               />
 
-              {/* Confirm Password Field */}
+
               <AuthInput
                 label="Confirm Password"
                 theme={theme}
@@ -163,14 +176,16 @@ export default function SignupScreen() {
                 )}
               />
 
-              {/* Sign Up Button */}
               <TouchableOpacity
-                style={[styles.submitButton, { opacity: isLoading ? 0.8 : 1 }]}
+                style={[
+                  styles.submitButton,
+                  { opacity: registerMutation.isPending ? 0.8 : 1 },
+                ]}
                 onPress={handleSignup}
-                disabled={isLoading}
+                disabled={registerMutation.isPending}
                 activeOpacity={0.8}
               >
-                {isLoading ? (
+                {registerMutation.isPending ? (
                   <ActivityIndicator color="#FFFFFF" size="small" />
                 ) : (
                   <Text style={styles.submitButtonText}>Create Account</Text>
@@ -178,10 +193,8 @@ export default function SignupScreen() {
               </TouchableOpacity>
             </View>
 
-            {/* Social Buttons */}
             <SocialButtons theme={theme} dividerText="or sign up with" />
 
-            {/* Navigation Bottom Footer */}
             <View style={styles.footerRow}>
               <Text style={[styles.footerText, { color: theme.textSecondary }]}>
                 Already have an account?{" "}

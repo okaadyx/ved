@@ -18,48 +18,59 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { z } from "zod";
+
+const loginSchema = z.object({
+  email: z
+    .string()
+    .trim()
+    .min(1, "Please fill in all fields.")
+    .email("Please enter a valid email address."),
+  password: z
+    .string()
+    .min(1, "Please fill in all fields.")
+    .min(6, "Password must be at least 6 characters."),
+});
+
+import { useLoginMutation } from "@/hooks/queries";
+
 export default function LoginScreen() {
   const scheme = useColorScheme();
   const theme = Colors[scheme === "dark" ? "dark" : "light"];
 
-  // Form State
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const loginMutation = useLoginMutation();
 
   const handleLogin = () => {
     setError(null);
 
-    // Validation checks
-    if (!email.trim() || !password.trim()) {
-      setError("Please fill in all fields.");
+    const validation = loginSchema.safeParse({ email, password });
+    if (!validation.success) {
+      setError(validation.error.issues[0].message);
       return;
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setError("Please enter a valid email address.");
-      return;
-    }
-
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters.");
-      return;
-    }
-
-    setIsLoading(true);
-
-    // Simulate Auth API call
-    setTimeout(() => {
-      setIsLoading(false);
-      router.replace("/drawer/index" as any);
-    }, 1500);
+    loginMutation.mutate(
+      { email, password },
+      {
+        onSuccess: () => {
+          router.replace("/drawer/index" as any);
+        },
+        onError: (err: any) => {
+          const errMsg =
+            err.response?.data?.message || err.message || "Login failed.";
+          setError(errMsg);
+        },
+      }
+    );
   };
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-      {/* Background Aurora Mesh Glows */}
+
       <AuthBackground />
 
       <SafeAreaView style={styles.safeArea}>
@@ -72,7 +83,6 @@ export default function LoginScreen() {
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled"
           >
-            {/* Back Button */}
             <TouchableOpacity
               style={[styles.backButton, { backgroundColor: theme.backgroundElement }]}
               onPress={() => router.back()}
@@ -81,7 +91,7 @@ export default function LoginScreen() {
               <BackIcon color={theme.text} />
             </TouchableOpacity>
 
-            {/* Header Section */}
+
             <View style={styles.header}>
               <Text style={[styles.title, { color: theme.text }]}>Welcome back</Text>
               <Text style={[styles.subtitle, { color: theme.textSecondary }]}>
@@ -89,7 +99,6 @@ export default function LoginScreen() {
               </Text>
             </View>
 
-            {/* Form Fields */}
             <View style={styles.form}>
               {error && (
                 <View style={styles.errorAlert}>
@@ -97,7 +106,6 @@ export default function LoginScreen() {
                 </View>
               )}
 
-              {/* Email Field */}
               <AuthInput
                 label="Email Address"
                 theme={theme}
@@ -112,7 +120,6 @@ export default function LoginScreen() {
                 )}
               />
 
-              {/* Password Field */}
               <AuthInput
                 label="Password"
                 theme={theme}
@@ -134,14 +141,16 @@ export default function LoginScreen() {
                 }
               />
 
-              {/* Sign In Button */}
               <TouchableOpacity
-                style={[styles.submitButton, { opacity: isLoading ? 0.8 : 1 }]}
+                style={[
+                  styles.submitButton,
+                  { opacity: loginMutation.isPending ? 0.8 : 1 },
+                ]}
                 onPress={handleLogin}
-                disabled={isLoading}
+                disabled={loginMutation.isPending}
                 activeOpacity={0.8}
               >
-                {isLoading ? (
+                {loginMutation.isPending ? (
                   <ActivityIndicator color="#FFFFFF" size="small" />
                 ) : (
                   <Text style={styles.submitButtonText}>Sign In</Text>
@@ -149,10 +158,8 @@ export default function LoginScreen() {
               </TouchableOpacity>
             </View>
 
-            {/* Social Buttons */}
             <SocialButtons theme={theme} />
 
-            {/* Navigation Bottom Footer */}
             <View style={styles.footerRow}>
               <Text style={[styles.footerText, { color: theme.textSecondary }]}>
                 Don't have an account?{" "}
