@@ -4,6 +4,8 @@ import { MessageItem } from "@/components/chat/MessageItem";
 import { Suggestions } from "@/components/chat/Suggestions";
 import { Colors, MaxContentWidth, Spacing } from "@/constants/theme";
 import { useChatStream } from "@/hooks/useChatStream";
+import { useLocalSearchParams } from "expo-router";
+import { useChatMessagesQuery } from "@/hooks/queries";
 import { useEffect, useRef } from "react";
 import {
   Animated,
@@ -13,6 +15,7 @@ import {
   StyleSheet,
   View,
   useColorScheme,
+  ActivityIndicator,
 } from "react-native";
 import {
   SafeAreaView,
@@ -24,16 +27,45 @@ export default function HomeScreen() {
   const scheme = useColorScheme();
   const theme = Colors[scheme === "dark" ? "dark" : "light"];
 
+  const { chatId: routeChatId } = useLocalSearchParams<{ chatId?: string }>();
+
   const {
     messages,
+    setMessages,
     inputText,
     setInputText,
     isTyping,
     isStreamingActive,
+    chatId,
+    setChatId,
     flatListRef,
     handleSend,
     handleClear,
   } = useChatStream();
+
+  // Load chat session if selected from history
+  const { data: dbMessages, isFetching } = useChatMessagesQuery(
+    routeChatId && routeChatId !== "" ? routeChatId : null
+  );
+
+  useEffect(() => {
+    if (routeChatId && routeChatId !== "") {
+      if (dbMessages) {
+        // Map messages to internal format
+        const mapped = dbMessages.map((msg: any) => ({
+          id: msg.id,
+          role: msg.role as "user" | "assistant",
+          content: msg.content,
+          timestamp: new Date(msg.createdAt),
+        }));
+        setMessages(mapped);
+        setChatId(routeChatId);
+      }
+    } else {
+      // Starting a new chat
+      handleClear();
+    }
+  }, [routeChatId, dbMessages]);
 
   // Animation Refs
   const pulseAnim = useRef(new Animated.Value(1)).current;
@@ -170,7 +202,11 @@ export default function HomeScreen() {
           keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 0}
           style={styles.keyboardView}
         >
-          {messages.length === 0 ? (
+          {isFetching ? (
+            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+              <ActivityIndicator size="large" color="#6366F1" />
+            </View>
+          ) : messages.length === 0 ? (
             /* Welcome Empty State */
             <FlatList
               style={{ flex: 1 }}

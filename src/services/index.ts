@@ -1,9 +1,7 @@
 import axios, { AxiosInstance } from "axios";
-import * as SecureStore from "expo-secure-store";
 import { UserApi } from "./user";
 import { RagApi } from "./rag";
-
-const TOKEN_KEY = "auth_token";
+import { getToken } from "../utils/auth";
 
 export class Api {
   axiosClient: AxiosInstance;
@@ -22,7 +20,7 @@ export class Api {
     this.axiosClient.interceptors.request.use(
       async (config) => {
         try {
-          const token = await SecureStore.getItemAsync(TOKEN_KEY);
+          const token = await getToken();
           if (token) {
             config.headers["Authorization"] = `Bearer ${token}`;
           }

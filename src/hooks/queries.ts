@@ -1,6 +1,6 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/services";
-import { RegisterRequest, LoginRequest } from "@/services/user";
+import { LoginRequest, RegisterRequest } from "@/services/user";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 /**
  * Mutation for user login.
@@ -34,18 +34,15 @@ export function useRegisterMutation() {
 export function useUserQuery() {
   return useQuery({
     queryKey: ["user"],
-    queryFn: () => api.user.user().then((res) => res.data.data),
+    queryFn: () => api.user.user().then((res) => res.data.data.user),
     retry: false,
   });
 }
 
-/**
- * Query to fetch user RAG chat history sessions.
- */
 export function useChatsQuery() {
   return useQuery({
     queryKey: ["chats"],
-    queryFn: () => api.rag.getChats().then((res) => res.data),
+    queryFn: () => api.rag.getChats().then((res) => res.data.data),
   });
 }
 
@@ -57,7 +54,7 @@ export function useChatMessagesQuery(chatId: string | null) {
     queryKey: ["chat-messages", chatId],
     queryFn: () => {
       if (!chatId) return Promise.resolve([]);
-      return api.rag.getChatMessages(chatId).then((res) => res.data);
+      return api.rag.getChatMessages(chatId).then((res) => res.data.data);
     },
     enabled: !!chatId,
   });

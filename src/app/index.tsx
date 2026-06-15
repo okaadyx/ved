@@ -1,22 +1,31 @@
+import { getToken } from "@/utils/auth";
+import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
-import { router } from "expo-router";
-import { getToken } from "@/utils/auth";
 
 export default function Index() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let active = true;
     async function initAuth() {
       const token = await getToken();
+      if (!active) return;
       if (token) {
-        router.replace("/drawer/index" as any);
+        router.replace("/drawer");
       } else {
-        router.replace("/auth/welcome" as any);
+        router.replace("/auth/welcome");
       }
       setLoading(false);
     }
-    initAuth();
+    const timer = setTimeout(() => {
+      initAuth();
+    }, 100);
+
+    return () => {
+      active = false;
+      clearTimeout(timer);
+    };
   }, []);
 
   if (loading) {
@@ -36,4 +45,3 @@ export default function Index() {
 
   return null;
 }
-

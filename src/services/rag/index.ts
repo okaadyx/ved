@@ -28,6 +28,18 @@ export interface UploadResponse {
   documentId?: string;
 }
 
+export interface ChatsResponse {
+  status: boolean;
+  message: string;
+  data: ChatSession[];
+}
+
+export interface ChatMessagesResponse {
+  status: boolean;
+  message: string;
+  data: ChatMessage[];
+}
+
 export class RagApi {
   client: AxiosInstance;
 
@@ -57,14 +69,14 @@ export class RagApi {
    * Fetch all chat history sessions for the authenticated user
    */
   getChats() {
-    return this.client.get<ChatSession[]>("/rag/chats");
+    return this.client.get<ChatsResponse>("/rag/chats");
   }
 
   /**
    * Fetch all messages inside a specific chat session
    */
   getChatMessages(chatId: string) {
-    return this.client.get<ChatMessage[]>(`/rag/chats/${chatId}`);
+    return this.client.get<ChatMessagesResponse>(`/rag/chats/${chatId}`);
   }
 
   /**

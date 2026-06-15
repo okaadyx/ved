@@ -3,6 +3,7 @@ import { FlatList } from "react-native";
 import axios from "axios";
 import { Message } from "@/types/chat";
 import { getToken } from "@/utils/auth";
+import { useQueryClient } from "@tanstack/react-query";
 
 const getApiUrl = () => {
   return "http://192.168.1.4:3000";
@@ -67,6 +68,7 @@ const fetchToken = async (): Promise<string> => {
 };
 
 export const useChatStream = () => {
+  const queryClient = useQueryClient();
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -257,6 +259,7 @@ export const useChatStream = () => {
 
           if (response.type === "chatId") {
             setChatId(response.chatId);
+            queryClient.invalidateQueries({ queryKey: ["chats"] });
           } else if (response.type === "content") {
             streamingBufferRef.current += response.content;
           } else if (response.type === "done") {
@@ -266,6 +269,7 @@ export const useChatStream = () => {
               flushIntervalRef.current = null;
             }
             setIsTyping(false);
+            queryClient.invalidateQueries({ queryKey: ["chats"] });
 
             const finalContent = streamingBufferRef.current;
             setMessages((prev) => {
@@ -313,11 +317,13 @@ export const useChatStream = () => {
 
   return {
     messages,
+    setMessages,
     inputText,
     setInputText,
     isTyping,
     isStreamingActive,
     chatId,
+    setChatId,
     flatListRef,
     handleSend,
     handleClear,

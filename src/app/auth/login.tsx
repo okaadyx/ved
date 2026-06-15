@@ -57,20 +57,19 @@ export default function LoginScreen() {
       { email, password },
       {
         onSuccess: () => {
-          router.replace("/drawer/index" as any);
+          router.replace("/drawer");
         },
         onError: (err: any) => {
           const errMsg =
             err.response?.data?.message || err.message || "Login failed.";
           setError(errMsg);
         },
-      }
+      },
     );
   };
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-
       <AuthBackground />
 
       <SafeAreaView style={styles.safeArea}>
@@ -84,16 +83,20 @@ export default function LoginScreen() {
             keyboardShouldPersistTaps="handled"
           >
             <TouchableOpacity
-              style={[styles.backButton, { backgroundColor: theme.backgroundElement }]}
+              style={[
+                styles.backButton,
+                { backgroundColor: theme.backgroundElement },
+              ]}
               onPress={() => router.back()}
               activeOpacity={0.7}
             >
               <BackIcon color={theme.text} />
             </TouchableOpacity>
 
-
             <View style={styles.header}>
-              <Text style={[styles.title, { color: theme.text }]}>Welcome back</Text>
+              <Text style={[styles.title, { color: theme.text }]}>
+                Welcome back
+              </Text>
               <Text style={[styles.subtitle, { color: theme.textSecondary }]}>
                 Access your Aether AI assistant account
               </Text>
@@ -134,7 +137,9 @@ export default function LoginScreen() {
                 )}
                 rightElement={
                   <TouchableOpacity activeOpacity={0.7}>
-                    <Text style={[styles.forgotPasswordText, { color: "#6366F1" }]}>
+                    <Text
+                      style={[styles.forgotPasswordText, { color: "#6366F1" }]}
+                    >
                       Forgot Password?
                     </Text>
                   </TouchableOpacity>
@@ -164,8 +169,13 @@ export default function LoginScreen() {
               <Text style={[styles.footerText, { color: theme.textSecondary }]}>
                 Don't have an account?{" "}
               </Text>
-              <TouchableOpacity onPress={() => router.push("/auth/signup")} activeOpacity={0.7}>
-                <Text style={[styles.signUpLink, { color: "#6366F1" }]}>Sign Up</Text>
+              <TouchableOpacity
+                onPress={() => router.push("/auth/signup")}
+                activeOpacity={0.7}
+              >
+                <Text style={[styles.signUpLink, { color: "#6366F1" }]}>
+                  Sign Up
+                </Text>
               </TouchableOpacity>
             </View>
           </ScrollView>

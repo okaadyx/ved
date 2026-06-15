@@ -1,5 +1,6 @@
 import { Drawer } from "expo-router/drawer";
 import { useColorScheme } from "react-native";
+import CustomDrawerContent from "@/components/drawer/CustomDrawerContent";
 
 const colors = {
   light: {
@@ -24,6 +25,7 @@ export default function Layout() {
 
   return (
     <Drawer
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
         headerShown: false,
         drawerStyle: {

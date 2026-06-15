@@ -15,17 +15,17 @@ export const ChatHeader = ({ theme, showClear, onClear, statusPulseAnim }: ChatH
   return (
     <View style={styles.header}>
       <View style={styles.headerLeft}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => (navigation as any).toggleDrawer()}
           style={{ marginRight: Spacing.two }}
           activeOpacity={0.7}
         >
           <Text style={{ fontSize: 24, color: theme.text }}>☰</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <View style={styles.statusDotWrapper}>
-          <View style={styles.headerAvatar}>
+          <TouchableOpacity style={styles.headerAvatar} onPress={() => (navigation as any).toggleDrawer()}>
             <Text style={{ fontSize: 18 }}>🤖</Text>
-          </View>
+          </TouchableOpacity>
           <Animated.View
             style={[
               styles.activeStatusDot,

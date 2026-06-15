@@ -25,10 +25,14 @@ export interface AuthResponse {
 }
 
 export interface UserResponse {
+  status: boolean;
+  message: string;
   data: {
-    id: string;
-    email: string;
-    name: string;
+    user: {
+      id: string;
+      email: string;
+      name: string;
+    };
   };
 }
 
