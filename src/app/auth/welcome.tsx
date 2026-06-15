@@ -167,7 +167,7 @@ export default function WelcomeScreen() {
             <TouchableOpacity
               style={styles.guestLink}
               activeOpacity={0.7}
-              onPress={() => router.replace("/drawer/index")}
+              onPress={() => router.replace("/drawer/index" as any)}
             >
               <Text style={[styles.guestLinkText, { color: theme.textSecondary }]}>
                 Continue as Guest

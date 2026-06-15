@@ -53,7 +53,7 @@ export default function LoginScreen() {
     // Simulate Auth API call
     setTimeout(() => {
       setIsLoading(false);
-      router.replace("/drawer/index");
+      router.replace("/drawer/index" as any);
     }, 1500);
   };
 

@@ -60,7 +60,7 @@ export default function SignupScreen() {
     // Simulate Auth Registration API call
     setTimeout(() => {
       setIsLoading(false);
-      router.replace("/drawer/index");
+      router.replace("/drawer/index" as any);
     }, 1500);
   };
 
