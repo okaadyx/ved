@@ -3,11 +3,12 @@ import { ChatInput } from "@/components/chat/ChatInput";
 import { MessageItem } from "@/components/chat/MessageItem";
 import { Suggestions } from "@/components/chat/Suggestions";
 import { Colors, MaxContentWidth, Spacing } from "@/constants/theme";
+import { useChatMessagesQuery } from "@/hooks/queries";
 import { useChatStream } from "@/hooks/useChatStream";
 import { useLocalSearchParams } from "expo-router";
-import { useChatMessagesQuery } from "@/hooks/queries";
 import { useEffect, useRef } from "react";
 import {
+  ActivityIndicator,
   Animated,
   FlatList,
   KeyboardAvoidingView,
@@ -15,7 +16,6 @@ import {
   StyleSheet,
   View,
   useColorScheme,
-  ActivityIndicator,
 } from "react-native";
 import {
   SafeAreaView,
@@ -45,7 +45,7 @@ export default function HomeScreen() {
 
   // Load chat session if selected from history
   const { data: dbMessages, isFetching } = useChatMessagesQuery(
-    routeChatId && routeChatId !== "" ? routeChatId : null
+    routeChatId && routeChatId !== "" ? routeChatId : null,
   );
 
   useEffect(() => {
@@ -163,14 +163,8 @@ export default function HomeScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-
       <SafeAreaView style={styles.safeArea} edges={["top", "left", "right"]}>
-        <ChatHeader
-          theme={theme}
-          showClear={messages.length > 0}
-          onClear={handleClear}
-          statusPulseAnim={statusPulseAnim}
-        />
+        <ChatHeader theme={theme} statusPulseAnim={statusPulseAnim} />
 
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -178,7 +172,13 @@ export default function HomeScreen() {
           style={styles.keyboardView}
         >
           {isFetching ? (
-            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <ActivityIndicator size="large" color="#6366F1" />
             </View>
           ) : messages.length === 0 ? (
@@ -212,7 +212,9 @@ export default function HomeScreen() {
               renderItem={({ item, index }) => (
                 <MessageItem
                   message={item}
-                  isStreaming={index === messages.length - 1 && isStreamingActive}
+                  isStreaming={
+                    index === messages.length - 1 && isStreamingActive
+                  }
                   theme={theme}
                   scheme={scheme}
                 />

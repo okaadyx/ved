@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios";
-import { UserApi } from "./user";
-import { RagApi } from "./rag";
 import { getToken } from "../utils/auth";
+import { RagApi } from "./rag";
+import { UserApi } from "./user";
 
 export class Api {
   axiosClient: AxiosInstance;

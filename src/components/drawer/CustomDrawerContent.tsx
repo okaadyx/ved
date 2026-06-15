@@ -66,7 +66,6 @@ export default function CustomDrawerContent(props: any) {
 
   const { data: user, isLoading: userLoading } = useUserQuery();
   const deleteChatMutation = useDeleteChatMutation();
-  console.log(user?.email);
 
   const handleNewChat = () => {
     router.replace({ pathname: "/drawer" as any, params: { chatId: "" } });

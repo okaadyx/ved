@@ -1,15 +1,19 @@
 import { Spacing } from "@/constants/theme";
 import { useNavigation } from "expo-router";
-import { Animated, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Animated,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 interface ChatHeaderProps {
   theme: any;
-  showClear: boolean;
-  onClear: () => void;
   statusPulseAnim: Animated.Value;
 }
 
-export const ChatHeader = ({ theme, showClear, onClear, statusPulseAnim }: ChatHeaderProps) => {
+export const ChatHeader = ({ theme, statusPulseAnim }: ChatHeaderProps) => {
   const navigation = useNavigation();
 
   return (
@@ -23,7 +27,10 @@ export const ChatHeader = ({ theme, showClear, onClear, statusPulseAnim }: ChatH
           <Text style={{ fontSize: 24, color: theme.text }}>☰</Text>
         </TouchableOpacity> */}
         <View style={styles.statusDotWrapper}>
-          <TouchableOpacity style={styles.headerAvatar} onPress={() => (navigation as any).toggleDrawer()}>
+          <TouchableOpacity
+            style={styles.headerAvatar}
+            onPress={() => (navigation as any).toggleDrawer()}
+          >
             <Text style={{ fontSize: 18 }}>🤖</Text>
           </TouchableOpacity>
           <Animated.View
@@ -34,7 +41,12 @@ export const ChatHeader = ({ theme, showClear, onClear, statusPulseAnim }: ChatH
           />
         </View>
         <View>
-          <Text style={[styles.headerTitle, { color: theme.text, fontWeight: "700" }]}>
+          <Text
+            style={[
+              styles.headerTitle,
+              { color: theme.text, fontWeight: "700" },
+            ]}
+          >
             Aether AI
           </Text>
           <Text style={[styles.headerSubtitle, { color: theme.textSecondary }]}>
@@ -42,18 +54,6 @@ export const ChatHeader = ({ theme, showClear, onClear, statusPulseAnim }: ChatH
           </Text>
         </View>
       </View>
-
-      {showClear && (
-        <TouchableOpacity
-          style={styles.clearButton}
-          onPress={onClear}
-          activeOpacity={0.7}
-        >
-          <Text style={styles.clearText}>
-            Clear Chat
-          </Text>
-        </TouchableOpacity>
-      )}
     </View>
   );
 };
