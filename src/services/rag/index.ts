@@ -85,6 +85,31 @@ export class RagApi {
   deleteChat(chatId: string) {
     return this.client.delete<{ success: boolean; message: string }>(`/rag/chats/${chatId}`);
   }
+
+  /**
+   * Fetch all documents in the user's knowledge base
+   */
+  getDocuments() {
+    return this.client.get<DocumentsResponse>("/rag/documents");
+  }
+
+  /**
+   * Delete a document from the user's knowledge base
+   */
+  deleteDocument(filename: string) {
+    return this.client.delete<{ success: boolean; message: string }>(`/rag/documents/${encodeURIComponent(filename)}`);
+  }
+}
+
+export interface DocumentInfo {
+  filename: string;
+  chunksCount: number;
+}
+
+export interface DocumentsResponse {
+  status: boolean;
+  message: string;
+  data: DocumentInfo[];
 }
 
 export default RagApi;

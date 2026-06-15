@@ -5,7 +5,7 @@ import {
   useUserQuery,
 } from "@/hooks/queries";
 import { removeToken } from "@/utils/auth";
-import { router, useGlobalSearchParams } from "expo-router";
+import { router, useGlobalSearchParams, usePathname } from "expo-router";
 import {
   ActivityIndicator,
   ScrollView,
@@ -50,10 +50,19 @@ const LogoutIcon = ({ color }: { color: string }) => (
   </View>
 );
 
+const DatabaseIcon = ({ color }: { color: string }) => (
+  <View style={styles.iconContainer}>
+    <View style={[styles.dbDisk, { borderColor: color }]} />
+    <View style={[styles.dbDisk, { borderColor: color, marginTop: 2 }]} />
+    <View style={[styles.dbDisk, { borderColor: color, marginTop: 2 }]} />
+  </View>
+);
+
 export default function CustomDrawerContent(props: any) {
   const scheme = useColorScheme();
   const theme = Colors[scheme === "dark" ? "dark" : "light"];
   const insets = useSafeAreaInsets();
+  const pathname = usePathname();
 
   const params = useGlobalSearchParams<{ chatId?: string }>();
   const activeChatId = params.chatId || null;
@@ -120,6 +129,40 @@ export default function CustomDrawerContent(props: any) {
             New Chat
           </Text>
         </TouchableOpacity>
+
+        {/* Knowledge Base Button */}
+        {user && (
+          <TouchableOpacity
+            style={[
+              styles.kbButton,
+              pathname.includes("documents")
+                ? {
+                    backgroundColor: "rgba(99, 102, 241, 0.12)",
+                    borderColor: "rgba(99, 102, 241, 0.35)",
+                    borderWidth: 1,
+                  }
+                : {
+                    borderColor: theme.backgroundSelected,
+                    backgroundColor: theme.backgroundElement,
+                  },
+            ]}
+            onPress={() => {
+              router.replace("/drawer/documents" as any);
+              props.navigation.closeDrawer();
+            }}
+            activeOpacity={0.8}
+          >
+            <DatabaseIcon color={pathname.includes("documents") ? "#6366F1" : theme.text} />
+            <Text
+              style={[
+                styles.kbText,
+                { color: pathname.includes("documents") ? theme.text : theme.textSecondary },
+              ]}
+            >
+              Knowledge Base
+            </Text>
+          </TouchableOpacity>
+        )}
 
         {/* Chat History Header */}
         <Text style={[styles.sectionHeader, { color: theme.textSecondary }]}>
@@ -472,5 +515,24 @@ const styles = StyleSheet.create({
     borderTopWidth: 1.5,
     transform: [{ rotate: "45deg" }],
     marginLeft: -2.5,
+  },
+  kbButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 14,
+    borderRadius: 16,
+    borderWidth: 1,
+    marginBottom: 20,
+  },
+  kbText: {
+    marginLeft: 12,
+    fontSize: 15,
+    fontWeight: "600",
+  },
+  dbDisk: {
+    width: 13,
+    height: 4,
+    borderRadius: 1.5,
+    borderWidth: 1.2,
   },
 });

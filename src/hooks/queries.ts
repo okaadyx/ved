@@ -77,7 +77,34 @@ export function useDeleteChatMutation() {
  * Mutation to upload a document (PDF) to the vector store.
  */
 export function useUploadDocumentMutation() {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (formData: FormData) => api.rag.uploadDocument(formData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["documents"] });
+    },
+  });
+}
+
+/**
+ * Query to fetch all unique documents in the user's knowledge base.
+ */
+export function useDocumentsQuery() {
+  return useQuery({
+    queryKey: ["documents"],
+    queryFn: () => api.rag.getDocuments().then((res) => res.data.data),
+  });
+}
+
+/**
+ * Mutation to delete a document from the knowledge base.
+ */
+export function useDeleteDocumentMutation() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (filename: string) => api.rag.deleteDocument(filename),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["documents"] });
+    },
   });
 }

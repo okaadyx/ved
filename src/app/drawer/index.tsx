@@ -163,7 +163,7 @@ export default function HomeScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-      <SafeAreaView style={styles.safeArea} edges={["top", "left", "right"]}>
+      <View style={[styles.safeArea, { paddingTop: Math.max(insets.top, 12) }]}>
         <ChatHeader theme={theme} statusPulseAnim={statusPulseAnim} />
 
         <KeyboardAvoidingView
@@ -255,7 +255,7 @@ export default function HomeScreen() {
             insets={insets}
           />
         </KeyboardAvoidingView>
-      </SafeAreaView>
+      </View>
     </View>
   );
 }
