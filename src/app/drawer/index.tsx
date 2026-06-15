@@ -163,31 +163,6 @@ export default function HomeScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-      {/* Background Aurora Mesh Glows */}
-      <View style={[StyleSheet.absoluteFill, styles.glowContainer]}>
-        <View
-          style={[
-            styles.glowCircle1,
-            {
-              backgroundColor:
-                scheme === "dark"
-                  ? "rgba(139, 92, 246, 0.08)"
-                  : "rgba(139, 92, 246, 0.15)",
-            },
-          ]}
-        />
-        <View
-          style={[
-            styles.glowCircle2,
-            {
-              backgroundColor:
-                scheme === "dark"
-                  ? "rgba(20, 184, 166, 0.06)"
-                  : "rgba(20, 184, 166, 0.12)",
-            },
-          ]}
-        />
-      </View>
 
       <SafeAreaView style={styles.safeArea} edges={["top", "left", "right"]}>
         <ChatHeader
@@ -294,27 +269,7 @@ const styles = StyleSheet.create({
     maxWidth: MaxContentWidth,
     alignSelf: "stretch",
   },
-  glowContainer: {
-    overflow: "hidden",
-  },
-  glowCircle1: {
-    position: "absolute",
-    top: -200,
-    left: -150,
-    width: 500,
-    height: 500,
-    borderRadius: 250,
-    opacity: 0.8,
-  },
-  glowCircle2: {
-    position: "absolute",
-    bottom: -150,
-    right: -100,
-    width: 400,
-    height: 400,
-    borderRadius: 200,
-    opacity: 0.6,
-  },
+
   keyboardView: {
     flex: 1,
   },
