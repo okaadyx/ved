@@ -1,22 +1,22 @@
-import React, { useState } from "react";
+import { AuthBackground } from "@/components/auth/AuthBackground";
+import { BackIcon, LockIcon, MailIcon } from "@/components/auth/AuthIcons";
+import { AuthInput } from "@/components/auth/AuthInput";
+import { SocialButtons } from "@/components/auth/SocialButtons";
+import { Colors, MaxContentWidth, Spacing } from "@/constants/theme";
+import { router } from "expo-router";
+import { useState } from "react";
 import {
+  ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
   StyleSheet,
-  View,
   Text,
   TouchableOpacity,
   useColorScheme,
-  SafeAreaView,
-  KeyboardAvoidingView,
-  Platform,
-  ActivityIndicator,
-  ScrollView,
+  View,
 } from "react-native";
-import { router } from "expo-router";
-import { Colors, Spacing, MaxContentWidth } from "@/constants/theme";
-import { AuthBackground } from "@/components/auth/AuthBackground";
-import { AuthInput } from "@/components/auth/AuthInput";
-import { SocialButtons } from "@/components/auth/SocialButtons";
-import { BackIcon, MailIcon, LockIcon } from "@/components/auth/AuthIcons";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function LoginScreen() {
   const scheme = useColorScheme();

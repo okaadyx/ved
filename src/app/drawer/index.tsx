@@ -1,4 +1,10 @@
-import React, { useEffect, useRef } from "react";
+import { ChatHeader } from "@/components/chat/ChatHeader";
+import { ChatInput } from "@/components/chat/ChatInput";
+import { MessageItem } from "@/components/chat/MessageItem";
+import { Suggestions } from "@/components/chat/Suggestions";
+import { Colors, MaxContentWidth, Spacing } from "@/constants/theme";
+import { useChatStream } from "@/hooks/useChatStream";
+import { useEffect, useRef } from "react";
 import {
   Animated,
   FlatList,
@@ -12,12 +18,6 @@ import {
   SafeAreaView,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
-import { Colors, Spacing, MaxContentWidth } from "@/constants/theme";
-import { useChatStream } from "@/hooks/useChatStream";
-import { ChatHeader } from "@/components/chat/ChatHeader";
-import { MessageItem } from "@/components/chat/MessageItem";
-import { Suggestions } from "@/components/chat/Suggestions";
-import { ChatInput } from "@/components/chat/ChatInput";
 
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();

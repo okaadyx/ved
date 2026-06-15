@@ -1,5 +1,4 @@
-import React from "react";
-import { StyleSheet, View, useColorScheme, Dimensions } from "react-native";
+import { Dimensions, StyleSheet, View, useColorScheme } from "react-native";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
@@ -9,7 +8,7 @@ interface AuthBackgroundProps {
 
 export function AuthBackground({ glowOpacityMultiplier = 1 }: AuthBackgroundProps) {
   const scheme = useColorScheme();
-  
+
   return (
     <View style={[StyleSheet.absoluteFill, styles.glowContainer]}>
       <View

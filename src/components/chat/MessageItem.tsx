@@ -1,14 +1,13 @@
+import { Spacing } from "@/constants/theme";
+import { Message } from "@/types/chat";
 import React from "react";
 import {
   ActivityIndicator,
   ColorSchemeName,
-  Platform,
   StyleSheet,
   Text,
-  View,
+  View
 } from "react-native";
-import { Spacing } from "@/constants/theme";
-import { Message } from "@/types/chat";
 import { CodeBlock } from "./CodeBlock";
 import { CursorSymbol } from "./CursorSymbol";
 
@@ -293,20 +292,20 @@ export const MessageItem = React.memo(({ message, isStreaming, theme, scheme }: 
             styles.messageBubble,
             isUser
               ? [
-                  styles.userBubble,
-                  {
-                    backgroundColor:
-                      scheme === "dark"
-                        ? "rgba(139, 92, 246, 0.2)"
-                        : "rgba(139, 92, 246, 0.08)",
-                  },
-                ]
+                styles.userBubble,
+                {
+                  backgroundColor:
+                    scheme === "dark"
+                      ? "rgba(139, 92, 246, 0.2)"
+                      : "rgba(139, 92, 246, 0.08)",
+                },
+              ]
               : [
-                  styles.assistantBubble,
-                  {
-                    backgroundColor: theme.backgroundElement,
-                  },
-                ],
+                styles.assistantBubble,
+                {
+                  backgroundColor: theme.backgroundElement,
+                },
+              ],
             !isUser ? styles.assistantTextBody : undefined,
           ]}
         >

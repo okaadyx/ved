@@ -1,14 +1,14 @@
+import { Spacing } from "@/constants/theme";
 import React, { useState } from "react";
 import {
   StyleSheet,
-  View,
   Text,
   TextInput,
-  TouchableOpacity,
   TextInputProps,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { EyeIcon } from "./AuthIcons";
-import { Spacing } from "@/constants/theme";
 
 interface AuthInputProps extends Omit<TextInputProps, "secureTextEntry"> {
   label: string;

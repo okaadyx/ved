@@ -1,16 +1,16 @@
-import React, { useEffect, useRef } from "react";
+import { AuthBackground } from "@/components/auth/AuthBackground";
+import { Colors, MaxContentWidth, Spacing } from "@/constants/theme";
+import { router } from "expo-router";
+import { useEffect, useRef } from "react";
 import {
+  Animated,
   StyleSheet,
-  View,
   Text,
   TouchableOpacity,
   useColorScheme,
-  Animated,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { router } from "expo-router";
-import { Colors, Spacing, MaxContentWidth } from "@/constants/theme";
-import { AuthBackground } from "@/components/auth/AuthBackground";
 
 export default function WelcomeScreen() {
   const scheme = useColorScheme();

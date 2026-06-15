@@ -1,4 +1,5 @@
-import React from "react";
+import { Spacing } from "@/constants/theme";
+import { Suggestion } from "@/types/chat";
 import {
   Animated,
   Platform,
@@ -7,8 +8,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Spacing } from "@/constants/theme";
-import { Suggestion } from "@/types/chat";
 
 interface SuggestionsProps {
   theme: any;

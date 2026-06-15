@@ -1,6 +1,5 @@
-import React from "react";
-import { StyleSheet, TextInput, TouchableOpacity, View, Text } from "react-native";
 import { Spacing } from "@/constants/theme";
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 interface ChatInputProps {
   theme: any;

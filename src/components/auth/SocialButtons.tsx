@@ -1,6 +1,5 @@
-import React from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { Spacing } from "@/constants/theme";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 interface SocialButtonsProps {
   theme: any;
@@ -8,6 +7,20 @@ interface SocialButtonsProps {
   onApplePress?: () => void;
   dividerText?: string;
 }
+
+const AppleIcon = ({ color, theme }: { color: string; theme: any }) => (
+  <View style={styles.appleWrapper}>
+    {/* Leaf */}
+    <View style={[styles.appleLeaf, { backgroundColor: color }]} />
+    {/* Main Body */}
+    <View style={styles.appleBodyRow}>
+      <View style={[styles.appleLeft, { backgroundColor: color }]} />
+      <View style={[styles.appleRight, { backgroundColor: color }]} />
+    </View>
+    {/* Bite Cutout Mask */}
+    <View style={[styles.appleBite, { backgroundColor: theme.backgroundElement }]} />
+  </View>
+);
 
 export function SocialButtons({
   theme,
@@ -39,9 +52,12 @@ export function SocialButtons({
           onPress={onGooglePress}
           activeOpacity={0.7}
         >
-          <Text style={[styles.socialButtonText, { color: theme.text }]}>
-            <Text style={{ color: "#EA4335", fontWeight: "800" }}>G</Text>oogle
-          </Text>
+          <View style={styles.socialButtonContent}>
+            <Text style={styles.googleIcon}>G</Text>
+            <Text style={[styles.socialButtonText, { color: theme.text }]}>
+              Google
+            </Text>
+          </View>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -55,9 +71,12 @@ export function SocialButtons({
           onPress={onApplePress}
           activeOpacity={0.7}
         >
-          <Text style={[styles.socialButtonText, { color: theme.text }]}>
-             Apple
-          </Text>
+          <View style={styles.socialButtonContent}>
+            <AppleIcon color={theme.text} theme={theme} />
+            <Text style={[styles.socialButtonText, { color: theme.text }]}>
+              Apple
+            </Text>
+          </View>
         </TouchableOpacity>
       </View>
     </View>
@@ -98,5 +117,65 @@ const styles = StyleSheet.create({
   socialButtonText: {
     fontSize: 15,
     fontWeight: "600",
+  },
+  socialButtonContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  googleIcon: {
+    fontWeight: "900",
+    fontSize: 17,
+    color: "#4285F4",
+    marginRight: 8,
+  },
+  appleWrapper: {
+    width: 14,
+    height: 16,
+    justifyContent: "flex-end",
+    alignItems: "center",
+    marginRight: 8,
+    position: "relative",
+  },
+  appleLeaf: {
+    width: 4.5,
+    height: 4.5,
+    borderTopLeftRadius: 4.5,
+    borderBottomRightRadius: 4.5,
+    position: "absolute",
+    top: 1,
+    right: 2,
+    transform: [{ rotate: "-25deg" }],
+  },
+  appleBodyRow: {
+    flexDirection: "row",
+    position: "absolute",
+    bottom: 0,
+  },
+  appleLeft: {
+    width: 7,
+    height: 10,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 4,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    marginRight: -2,
+  },
+  appleRight: {
+    width: 7,
+    height: 10,
+    borderTopLeftRadius: 4,
+    borderTopRightRadius: 5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    marginLeft: -2,
+  },
+  appleBite: {
+    position: "absolute",
+    width: 4.5,
+    height: 4.5,
+    borderRadius: 2.25,
+    right: -1.5,
+    bottom: 3.5,
   },
 });

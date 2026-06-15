@@ -1,7 +1,6 @@
-import React from "react";
-import { Animated, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { useNavigation } from "expo-router";
 import { Spacing } from "@/constants/theme";
+import { useNavigation } from "expo-router";
+import { Animated, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 interface ChatHeaderProps {
   theme: any;
