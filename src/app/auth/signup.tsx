@@ -1,5 +1,10 @@
 import { AuthBackground } from "@/components/auth/AuthBackground";
-import { BackIcon, LockIcon, MailIcon, UserIcon } from "@/components/auth/AuthIcons";
+import {
+  BackIcon,
+  LockIcon,
+  MailIcon,
+  UserIcon,
+} from "@/components/auth/AuthIcons";
 import { AuthInput } from "@/components/auth/AuthInput";
 import { SocialButtons } from "@/components/auth/SocialButtons";
 import { Colors, MaxContentWidth, Spacing } from "@/constants/theme";
@@ -71,20 +76,21 @@ export default function SignupScreen() {
       { name, email, password },
       {
         onSuccess: () => {
-          router.replace("/drawer/index" as any);
+          router.replace("/drawer");
         },
         onError: (err: any) => {
           const errMsg =
-            err.response?.data?.message || err.message || "Registration failed.";
+            err.response?.data?.message ||
+            err.message ||
+            "Registration failed.";
           setError(errMsg);
         },
-      }
+      },
     );
   };
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-
       <AuthBackground />
 
       <SafeAreaView style={styles.safeArea}>
@@ -97,9 +103,11 @@ export default function SignupScreen() {
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled"
           >
-
             <TouchableOpacity
-              style={[styles.backButton, { backgroundColor: theme.backgroundElement }]}
+              style={[
+                styles.backButton,
+                { backgroundColor: theme.backgroundElement },
+              ]}
               onPress={() => router.back()}
               activeOpacity={0.7}
             >
@@ -107,9 +115,12 @@ export default function SignupScreen() {
             </TouchableOpacity>
 
             <View style={styles.header}>
-              <Text style={[styles.title, { color: theme.text }]}>Create Account</Text>
+              <Text style={[styles.title, { color: theme.text }]}>
+                Create Account
+              </Text>
               <Text style={[styles.subtitle, { color: theme.textSecondary }]}>
-                Join Aether AI and experience intelligent workspace collaboration
+                Join Aether AI and experience intelligent workspace
+                collaboration
               </Text>
             </View>
 
@@ -161,7 +172,6 @@ export default function SignupScreen() {
                 )}
               />
 
-
               <AuthInput
                 label="Confirm Password"
                 theme={theme}
@@ -199,8 +209,13 @@ export default function SignupScreen() {
               <Text style={[styles.footerText, { color: theme.textSecondary }]}>
                 Already have an account?{" "}
               </Text>
-              <TouchableOpacity onPress={() => router.push("/auth/login")} activeOpacity={0.7}>
-                <Text style={[styles.signUpLink, { color: "#6366F1" }]}>Log In</Text>
+              <TouchableOpacity
+                onPress={() => router.push("/auth/login")}
+                activeOpacity={0.7}
+              >
+                <Text style={[styles.signUpLink, { color: "#6366F1" }]}>
+                  Log In
+                </Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
