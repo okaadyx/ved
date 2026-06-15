@@ -1,0 +1,339 @@
+import React, { useEffect, useRef } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  useColorScheme,
+  Animated,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { router } from "expo-router";
+import { Colors, Spacing, MaxContentWidth } from "@/constants/theme";
+import { AuthBackground } from "@/components/auth/AuthBackground";
+
+export default function WelcomeScreen() {
+  const scheme = useColorScheme();
+  const theme = Colors[scheme === "dark" ? "dark" : "light"];
+
+  // Animation Values
+  const pulseAnim = useRef(new Animated.Value(1)).current;
+  const rotateAnim = useRef(new Animated.Value(0)).current;
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const slideAnim = useRef(new Animated.Value(30)).current;
+
+  useEffect(() => {
+    // Entrance animations
+    Animated.parallel([
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: true,
+      }),
+      Animated.spring(slideAnim, {
+        toValue: 0,
+        friction: 8,
+        tension: 40,
+        useNativeDriver: true,
+      }),
+    ]).start();
+
+    // Orb Pulsing loop
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(pulseAnim, {
+          toValue: 1.08,
+          duration: 3000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(pulseAnim, {
+          toValue: 0.95,
+          duration: 3000,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+
+    // Constant slow rotation
+    Animated.loop(
+      Animated.timing(rotateAnim, {
+        toValue: 1,
+        duration: 20000,
+        useNativeDriver: true,
+      })
+    ).start();
+  }, []);
+
+  const spin = rotateAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["0deg", "360deg"],
+  });
+
+  return (
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
+      {/* Background Aurora Mesh Glows */}
+      <AuthBackground glowOpacityMultiplier={scheme === "dark" ? 1.6 : 1.25} />
+
+      <SafeAreaView style={styles.safeArea}>
+        <Animated.View
+          style={[
+            styles.contentContainer,
+            { opacity: fadeAnim, transform: [{ translateY: slideAnim }] },
+          ]}
+        >
+          {/* Header Section */}
+          <View style={styles.header}>
+            <View style={[styles.logoBadge, { backgroundColor: theme.backgroundElement }]}>
+              <Text style={styles.logoEmoji}>✨</Text>
+            </View>
+            <Text style={[styles.logoText, { color: theme.text }]}>Aether AI</Text>
+          </View>
+
+          {/* Premium Interactive Orb Visualizer */}
+          <View style={styles.orbWrapper}>
+            <Animated.View
+              style={[
+                styles.orbOuterRing,
+                {
+                  borderColor: scheme === "dark" ? "rgba(139, 92, 246, 0.25)" : "rgba(139, 92, 246, 0.15)",
+                  transform: [{ rotate: spin }],
+                },
+              ]}
+            >
+              <View style={[styles.orbNode, { backgroundColor: "#8B5CF6", top: 10, left: 10 }]} />
+              <View style={[styles.orbNode, { backgroundColor: "#14B8A6", bottom: 10, right: 10 }]} />
+            </Animated.View>
+
+            <Animated.View
+              style={[
+                styles.orbInnerRing,
+                {
+                  borderColor: scheme === "dark" ? "rgba(20, 184, 166, 0.3)" : "rgba(20, 184, 166, 0.2)",
+                  transform: [{ rotate: spin }, { scale: pulseAnim }],
+                },
+              ]}
+            />
+
+            <Animated.View
+              style={[
+                styles.orbCore,
+                {
+                  transform: [{ scale: pulseAnim }],
+                  backgroundColor: scheme === "dark" ? "rgba(99, 102, 241, 0.15)" : "rgba(99, 102, 241, 0.1)",
+                  shadowColor: "#6366F1",
+                },
+              ]}
+            >
+              <Text style={{ fontSize: 48 }}>🤖</Text>
+            </Animated.View>
+          </View>
+
+          {/* Text Info */}
+          <View style={styles.textGroup}>
+            <Text style={[styles.title, { color: theme.text }]}>
+              Elevate Your{"\n"}Intelligence
+            </Text>
+            <Text style={[styles.subtitle, { color: theme.textSecondary }]}>
+              Experience seamless conversation, smart drafts, and effortless answers powered by Aether's contextual intelligence engine.
+            </Text>
+          </View>
+
+          {/* Action Buttons */}
+          <View style={styles.buttonGroup}>
+            <TouchableOpacity
+              style={styles.primaryButton}
+              activeOpacity={0.8}
+              onPress={() => router.push("/auth/signup")}
+            >
+              <Text style={styles.primaryButtonText}>Get Started</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[
+                styles.secondaryButton,
+                {
+                  backgroundColor: theme.backgroundElement,
+                  borderColor: theme.backgroundSelected,
+                },
+              ]}
+              activeOpacity={0.8}
+              onPress={() => router.push("/auth/login")}
+            >
+              <Text style={[styles.secondaryButtonText, { color: theme.text }]}>
+                Log In
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.guestLink}
+              activeOpacity={0.7}
+              onPress={() => router.replace("/drawer/index")}
+            >
+              <Text style={[styles.guestLinkText, { color: theme.textSecondary }]}>
+                Continue as Guest
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* Footer */}
+          <Text style={[styles.footerText, { color: theme.textSecondary }]}>
+            By signing up, you agree to our Terms of Service & Privacy Policy.
+          </Text>
+        </Animated.View>
+      </SafeAreaView>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  safeArea: {
+    flex: 1,
+    width: "100%",
+    maxWidth: MaxContentWidth,
+    alignSelf: "center",
+  },
+  contentContainer: {
+    flex: 1,
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: Spacing.five,
+    paddingVertical: Spacing.four,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.two,
+    marginTop: Spacing.two,
+  },
+  logoBadge: {
+    width: 38,
+    height: 38,
+    borderRadius: 12,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "rgba(128, 128, 128, 0.15)",
+  },
+  logoEmoji: {
+    fontSize: 18,
+  },
+  logoText: {
+    fontSize: 20,
+    fontWeight: "800",
+    letterSpacing: -0.5,
+  },
+  orbWrapper: {
+    height: 230,
+    width: 230,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+    marginVertical: Spacing.three,
+  },
+  orbOuterRing: {
+    position: "absolute",
+    width: 220,
+    height: 220,
+    borderRadius: 110,
+    borderWidth: 1,
+    borderStyle: "dashed",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  orbInnerRing: {
+    position: "absolute",
+    width: 170,
+    height: 170,
+    borderRadius: 85,
+    borderWidth: 1.5,
+  },
+  orbNode: {
+    position: "absolute",
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+  },
+  orbCore: {
+    width: 110,
+    height: 110,
+    borderRadius: 55,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "rgba(99, 102, 241, 0.25)",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.3,
+    shadowRadius: 20,
+    elevation: 5,
+  },
+  textGroup: {
+    alignItems: "center",
+    width: "100%",
+  },
+  title: {
+    fontSize: 38,
+    fontWeight: "800",
+    textAlign: "center",
+    lineHeight: 44,
+    letterSpacing: -1,
+  },
+  subtitle: {
+    fontSize: 15,
+    textAlign: "center",
+    lineHeight: 22,
+    marginTop: Spacing.three,
+    paddingHorizontal: Spacing.two,
+  },
+  buttonGroup: {
+    width: "100%",
+    gap: Spacing.three,
+    marginTop: Spacing.two,
+  },
+  primaryButton: {
+    backgroundColor: "#6366F1",
+    height: 54,
+    borderRadius: 16,
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#6366F1",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 4,
+  },
+  primaryButtonText: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "700",
+  },
+  secondaryButton: {
+    height: 54,
+    borderRadius: 16,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1.5,
+  },
+  secondaryButtonText: {
+    fontSize: 16,
+    fontWeight: "700",
+  },
+  guestLink: {
+    alignItems: "center",
+    paddingVertical: Spacing.one,
+  },
+  guestLinkText: {
+    fontSize: 14,
+    fontWeight: "600",
+    textDecorationLine: "underline",
+  },
+  footerText: {
+    fontSize: 11,
+    textAlign: "center",
+    opacity: 0.6,
+  },
+});
