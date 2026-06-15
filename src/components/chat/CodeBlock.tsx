@@ -50,7 +50,10 @@ export const CodeBlock = ({ lang, code, theme, showCursor }: CodeBlockProps) => 
         showsHorizontalScrollIndicator={true}
         style={styles.codeScrollView}
       >
-        <Text style={[styles.codeBlockText, { color: theme.text }]}>
+        <Text
+          selectable={true}
+          style={[styles.codeBlockText, { color: theme.text }]}
+        >
           {code}
           {showCursor && <CursorSymbol />}
         </Text>

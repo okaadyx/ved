@@ -58,12 +58,12 @@ export default function CustomDrawerContent(props: any) {
   const params = useGlobalSearchParams<{ chatId?: string }>();
   const activeChatId = params.chatId || null;
 
-  // TanStack Queries & Mutations
   const {
     data: chats,
     isLoading: chatsLoading,
     refetch: refetchChats,
   } = useChatsQuery();
+
   const { data: user, isLoading: userLoading } = useUserQuery();
   const deleteChatMutation = useDeleteChatMutation();
   console.log(user?.email);
@@ -232,20 +232,6 @@ export default function CustomDrawerContent(props: any) {
                 <LogoutIcon color="#EF4444" />
               </TouchableOpacity>
             </View>
-
-            <TouchableOpacity
-              style={[
-                styles.logoutButton,
-                {
-                  backgroundColor: "rgba(239, 68, 68, 0.08)",
-                  borderColor: "rgba(239, 68, 68, 0.2)",
-                },
-              ]}
-              activeOpacity={0.7}
-            >
-              <LogoutIcon color="#EF4444" />
-              <Text style={styles.logoutText}>Log Out</Text>
-            </TouchableOpacity>
           </View>
         ) : (
           <View style={styles.guestSection}>

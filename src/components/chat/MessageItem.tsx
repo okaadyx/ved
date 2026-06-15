@@ -1,11 +1,13 @@
 import { Spacing } from "@/constants/theme";
 import { Message } from "@/types/chat";
-import React from "react";
+import React, { useState } from "react";
 import {
   ActivityIndicator,
+  Clipboard,
   ColorSchemeName,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View
 } from "react-native";
 import { CodeBlock } from "./CodeBlock";
@@ -55,6 +57,7 @@ const renderMarkdownLine = (text: string, showCursor: boolean = false) => {
 
 export const MessageItem = React.memo(({ message, isStreaming, theme, scheme }: MessageItemProps) => {
   const isUser = message.role === "user";
+  const [copiedResponse, setCopiedResponse] = useState(false);
 
   const formatTime = (date: Date | string | number) => {
     const d = typeof date === "string" || typeof date === "number" ? new Date(date) : date;
@@ -64,14 +67,21 @@ export const MessageItem = React.memo(({ message, isStreaming, theme, scheme }: 
     return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
 
+  const handleCopyResponse = () => {
+    Clipboard.setString(message.content);
+    setCopiedResponse(true);
+    setTimeout(() => setCopiedResponse(false), 2000);
+  };
+
   const renderMessageContent = (
     content: string,
     isUser: boolean,
     isStreaming: boolean = false,
   ) => {
-    if (isUser) {
+        if (isUser) {
       return (
         <Text
+          selectable={true}
           style={{
             color: scheme === "dark" ? "#ffffff" : "#000000",
             fontSize: 15,
@@ -151,6 +161,7 @@ export const MessageItem = React.memo(({ message, isStreaming, theme, scheme }: 
               return (
                 <Text
                   key={blockIdx}
+                  selectable={true}
                   style={{
                     fontSize,
                     fontWeight,
@@ -193,6 +204,7 @@ export const MessageItem = React.memo(({ message, isStreaming, theme, scheme }: 
                             {num}.
                           </Text>
                           <Text
+                            selectable={true}
                             style={[styles.bulletText, { color: theme.text }]}
                           >
                             {renderMarkdownLine(listText, showCursorHere)}
@@ -215,6 +227,7 @@ export const MessageItem = React.memo(({ message, isStreaming, theme, scheme }: 
                             •
                           </Text>
                           <Text
+                            selectable={true}
                             style={[styles.bulletText, { color: theme.text }]}
                           >
                             {renderMarkdownLine(cleanedLine, showCursorHere)}
@@ -228,6 +241,7 @@ export const MessageItem = React.memo(({ message, isStreaming, theme, scheme }: 
                     return (
                       <Text
                         key={lineIdx}
+                        selectable={true}
                         style={[
                           styles.paragraph,
                           { color: theme.text, marginLeft: Spacing.four },
@@ -246,6 +260,7 @@ export const MessageItem = React.memo(({ message, isStreaming, theme, scheme }: 
             return (
               <Text
                 key={blockIdx}
+                selectable={true}
                 style={[styles.paragraph, { color: theme.text }]}
               >
                 {lines.map((line, lineIdx) => {
@@ -300,28 +315,29 @@ export const MessageItem = React.memo(({ message, isStreaming, theme, scheme }: 
                       : "rgba(139, 92, 246, 0.08)",
                 },
               ]
-              : [
-                styles.assistantBubble,
-                {
-                  backgroundColor: theme.backgroundElement,
-                },
-              ],
+              : styles.assistantBubble,
             !isUser ? styles.assistantTextBody : undefined,
           ]}
         >
           {renderMessageContent(message.content, isUser, isStreaming)}
         </View>
 
-        <Text
-          style={[
-            styles.timestamp,
-            isUser
-              ? [styles.timestamp, { color: theme.textSecondary, alignSelf: "flex-end" }]
-              : [styles.timestampLeft, { color: theme.textSecondary }],
-          ]}
-        >
-          {formatTime(message.timestamp)}
-        </Text>
+        <View style={styles.bubbleFooter}>
+          <Text style={[styles.timestampText, { color: theme.textSecondary }]}>
+            {formatTime(message.timestamp)}
+          </Text>
+          {!isUser && !isStreaming && message.content && (
+            <TouchableOpacity
+              onPress={handleCopyResponse}
+              style={styles.actionButton}
+              activeOpacity={0.7}
+            >
+              <Text style={[styles.actionButtonText, { color: theme.textSecondary }]}>
+                {copiedResponse ? "Copied" : "Copy"}
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
     </View>
   );
@@ -335,7 +351,7 @@ const styles = StyleSheet.create({
   userRow: {
     alignSelf: "flex-end",
     alignItems: "flex-end",
-    maxWidth: "80%",
+    maxWidth: "85%",
   },
   assistantRow: {
     flexDirection: "row",
@@ -344,12 +360,12 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   assistantAvatar: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
     justifyContent: "center",
     alignItems: "center",
-    marginRight: 12,
+    marginRight: 10,
     marginTop: 4,
     borderWidth: 1,
     borderColor: "rgba(128, 128, 128, 0.12)",
@@ -369,29 +385,38 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderRadius: 20,
+  },
+  userBubble: {
+    borderRadius: 22,
     elevation: 0.5,
     shadowColor: "#000000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 1,
   },
-  userBubble: {
-    borderRadius: 22,
-  },
   assistantBubble: {
-    borderBottomLeftRadius: 4,
-    borderWidth: 1,
-    borderColor: "rgba(128, 128, 128, 0.08)",
+    backgroundColor: "transparent",
+    paddingHorizontal: 0,
+    paddingVertical: 2,
   },
-  timestamp: {
-    fontSize: 9,
-    marginTop: 4,
-    marginHorizontal: 8,
-  },
-  timestampLeft: {
-    fontSize: 9,
+  bubbleFooter: {
+    flexDirection: "row",
+    alignItems: "center",
     marginTop: 6,
-    alignSelf: "flex-start",
+    gap: 12,
+  },
+  timestampText: {
+    fontSize: 9.5,
+  },
+  actionButton: {
+    paddingVertical: 2,
+    paddingHorizontal: 6,
+    borderRadius: 4,
+    backgroundColor: "rgba(128, 128, 128, 0.08)",
+  },
+  actionButtonText: {
+    fontSize: 9.5,
+    fontWeight: "600",
   },
   paragraph: {
     fontSize: 16,

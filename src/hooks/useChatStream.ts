@@ -218,6 +218,7 @@ export const useChatStream = () => {
           flushIntervalRef.current = null;
         }
         setIsTyping(false);
+        setIsStreamingActive(false);
 
         setMessages((prev) => {
           const lastMsg = prev[prev.length - 1];
@@ -269,6 +270,7 @@ export const useChatStream = () => {
               flushIntervalRef.current = null;
             }
             setIsTyping(false);
+            setIsStreamingActive(false);
             queryClient.invalidateQueries({ queryKey: ["chats"] });
 
             const finalContent = streamingBufferRef.current;
