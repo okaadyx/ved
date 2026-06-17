@@ -39,6 +39,9 @@ export default function Layout() {
           fontWeight: "600",
         },
       }}
-    ></Drawer>
+    >
+      <Drawer.Screen name="index" />
+      <Drawer.Screen name="documents" />
+    </Drawer>
   );
 }
