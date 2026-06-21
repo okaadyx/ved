@@ -2,6 +2,7 @@ import { SupabaseVectorStore } from "@langchain/community/vectorstores/supabase"
 import { OpenAIEmbeddings } from "@langchain/openai";
 import type { Response } from "express";
 import path from "path";
+import fs from "fs";
 import { agent } from "../agent/agent.js";
 import { SystemMessage } from "@langchain/core/messages";
 import { rag } from "../services/ragService.js";
@@ -102,6 +103,45 @@ export const chatController = async (req: AuthenticatedRequest, res: Response) =
     }
 };
 
+const getTargetBucket = async (bucketName: string): Promise<string> => {
+    try {
+        const { data: buckets, error: listError } = await supabaseClient.storage.listBuckets();
+        if (listError) {
+            console.error("Error listing Supabase buckets:", listError);
+            return bucketName; 
+        }
+
+        const matchedBucket = buckets?.find(b => b.name.toLowerCase() === bucketName.toLowerCase());
+        if (matchedBucket) {
+            return matchedBucket.name;
+        }
+
+        console.log(`Bucket '${bucketName}' not found. Attempting to create it...`);
+        const { error: createError } = await supabaseClient.storage.createBucket(bucketName, {
+            public: true,
+        });
+
+        if (createError) {
+            console.error(`Failed to create bucket '${bucketName}':`, createError.message);
+            // Fallback to lowercase 'public'
+            const { error: createErrorLower } = await supabaseClient.storage.createBucket("public", {
+                public: true,
+            });
+            if (!createErrorLower) {
+                console.log("Created bucket 'public' successfully.");
+                return "public";
+            }
+            console.error("Failed to create bucket 'public':", createErrorLower.message);
+        } else {
+            console.log(`Created bucket '${bucketName}' successfully.`);
+            return bucketName;
+        }
+    } catch (err) {
+        console.error("Error in getTargetBucket helper:", err);
+    }
+    return bucketName;
+};
+
 export const knowledgeBaseController = async (req: AuthenticatedRequest, res: Response) => {
     try {
         const userId = req.user?.id;
@@ -126,8 +166,53 @@ export const knowledgeBaseController = async (req: AuthenticatedRequest, res: Re
                 queryName: "match_documents"
             }
         );
-        successResponse(res, "Document uploaded successfully!", { filename: req.file.originalname });
+
+        // Read file content as buffer for Supabase Storage upload
+        const fileBuffer = fs.readFileSync(filePath);
+        
+        // Upload file to Supabase Storage
+        const targetBucket = await getTargetBucket("Public");
+        const fileKey = `${userId}/${req.file.originalname}`;
+        const { data: uploadData, error: uploadError } = await supabaseClient.storage
+            .from(targetBucket)
+            .upload(fileKey, fileBuffer, {
+                contentType: "application/pdf",
+                upsert: true,
+            });
+
+        if (uploadError) {
+            console.error("Supabase Storage upload error:", uploadError);
+            throw new Error(`Failed to upload document to Supabase Storage: ${uploadError.message}`);
+        }
+
+        // Get public URL of the uploaded document
+        const { data: { publicUrl } } = supabaseClient.storage
+            .from(targetBucket)
+            .getPublicUrl(fileKey);
+
+        // Delete temporary local file
+        try {
+            fs.unlinkSync(filePath);
+        } catch (unlinkErr) {
+            console.warn("Failed to delete temporary local file:", unlinkErr);
+        }
+
+        successResponse(res, "Document uploaded successfully!", { 
+            filename: req.file.originalname,
+            publicUrl 
+        });
     } catch (error) {
+        // Clean up temporary local file if any error occurs
+        if (req.file?.path) {
+            try {
+                const filePath = path.resolve(req.file.path);
+                if (fs.existsSync(filePath)) {
+                    fs.unlinkSync(filePath);
+                }
+            } catch (unlinkErr) {
+                console.warn("Failed to delete temporary local file during error cleanup:", unlinkErr);
+            }
+        }
         console.error("Error in knowledgeBaseController:", error);
         errorResponse(res, error instanceof Error ? error.message : String(error), 500, error);
     }
@@ -242,6 +327,18 @@ export const deleteDocumentController = async (req: AuthenticatedRequest, res: R
 
         if (!filename) {
             return errorResponse(res, "Filename is required", 400);
+        }
+
+        // Delete from Supabase Storage
+        const targetBucket = await getTargetBucket("Public");
+        const fileKey = `${userId}/${filename}`;
+        const { data: deleteData, error: deleteError } = await supabaseClient.storage
+            .from(targetBucket)
+            .remove([fileKey]);
+
+        if (deleteError) {
+            console.error("Supabase Storage deletion error:", deleteError);
+            // We proceed with database cleanup even if Supabase deletion fails
         }
 
         const result = await prisma.$executeRaw`
