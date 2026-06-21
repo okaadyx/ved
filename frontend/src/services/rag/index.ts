@@ -54,13 +54,22 @@ export class RagApi {
     return this.client.post<ChatResponse>("/rag/chat", { query, chatId });
   }
 
-  /**
-   * Upload a document (PDF) to the vector store
-   */
   uploadDocument(formData: FormData) {
     return this.client.post<UploadResponse>("/rag/upload", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
+      },
+      transformRequest: (data, headers) => {
+        if (headers) {
+          if (typeof headers.delete === "function") {
+            headers.delete("content-type");
+            headers.delete("Content-Type");
+          } else {
+            delete headers["content-type"];
+            delete headers["Content-Type"];
+          }
+        }
+        return data;
       },
     });
   }
