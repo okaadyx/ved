@@ -23,7 +23,10 @@ import { BottomTabInset, MaxContentWidth, Spacing } from "@/constants/theme";
 import { useTheme } from "@/hooks/use-theme";
 
 const getApiUrl = () => {
-  return "http://192.168.1.4:3000";
+  if (process.env.EXPO_PUBLIC_API_URL) {
+    return process.env.EXPO_PUBLIC_API_URL;
+  }
+  return "https://ved-ze45.onrender.com";
 };
 
 const getWsUrl = () => {
