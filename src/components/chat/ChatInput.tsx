@@ -30,7 +30,7 @@ export const ChatInput = ({ theme, inputText, onChangeText, onSend, insets }: Ch
       >
         <TextInput
           style={[styles.input, { color: theme.text }]}
-          placeholder="Message Aether..."
+          placeholder="Message VED..."
           placeholderTextColor={theme.textSecondary}
           value={inputText}
           onChangeText={onChangeText}
@@ -42,8 +42,8 @@ export const ChatInput = ({ theme, inputText, onChangeText, onSend, insets }: Ch
             styles.sendButton,
             {
               backgroundColor: !isSendDisabled
-                ? "#6366F1"
-                : "rgba(99, 102, 241, 0.15)",
+                ? "#7C5CFF"
+                : "rgba(124, 92, 255, 0.15)",
             },
           ]}
           activeOpacity={0.7}

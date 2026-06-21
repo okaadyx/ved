@@ -162,8 +162,8 @@ export default function DocumentsScreen() {
             <RefreshControl
               refreshing={isFetching}
               onRefresh={refetch}
-              tintColor="#6366F1"
-              colors={["#6366F1"]}
+              tintColor="#7C5CFF"
+              colors={["#7C5CFF"]}
             />
           }
           contentContainerStyle={[
@@ -174,7 +174,7 @@ export default function DocumentsScreen() {
             <View style={styles.listHeader}>
               <Text style={[styles.sectionTitle, { color: theme.text }]}>Upload Reference PDF</Text>
               <Text style={[styles.sectionSubtitle, { color: theme.textSecondary }]}>
-                Add custom documentation to train Aether AI. Once uploaded, the agent will query it to answer your questions.
+                Add custom documentation to train VED. Once uploaded, the agent will query it to answer your questions.
               </Text>
 
               {/* Upload Box */}
@@ -182,7 +182,7 @@ export default function DocumentsScreen() {
                 style={[
                   styles.uploadBox,
                   {
-                    borderColor: "rgba(99, 102, 241, 0.3)",
+                    borderColor: "rgba(124, 92, 255, 0.3)",
                     backgroundColor: theme.backgroundElement,
                   },
                 ]}
@@ -194,7 +194,7 @@ export default function DocumentsScreen() {
                     activeOpacity={0.7}
                   >
                     <View style={styles.pickerIconWrapper}>
-                      <CloudUploadIcon color="#6366F1" />
+                      <CloudUploadIcon color="#7C5CFF" />
                     </View>
                     <Text style={[styles.pickerTitle, { color: theme.text }]}>Select PDF file</Text>
                     <Text style={[styles.pickerSubtitle, { color: theme.textSecondary }]}>
@@ -226,7 +226,7 @@ export default function DocumentsScreen() {
                         <Text style={[styles.cancelBtnText, { color: theme.text }]}>Cancel</Text>
                       </TouchableOpacity>
                       <TouchableOpacity
-                        style={[styles.uploadBtn, { backgroundColor: "#6366F1" }]}
+                        style={[styles.uploadBtn, { backgroundColor: "#7C5CFF" }]}
                         onPress={handleUpload}
                         disabled={isUploading}
                       >
@@ -249,7 +249,7 @@ export default function DocumentsScreen() {
           ListEmptyComponent={
             isLoading ? (
               <View style={styles.loaderContainer}>
-                <ActivityIndicator size="large" color="#6366F1" />
+                <ActivityIndicator size="large" color="#7C5CFF" />
               </View>
             ) : (
               <View style={[styles.emptyContainer, { backgroundColor: theme.backgroundElement }]}>
@@ -266,7 +266,7 @@ export default function DocumentsScreen() {
               style={[
                 styles.docCard,
                 {
-                  borderColor: "rgba(99, 102, 241, 0.12)",
+                  borderColor: "rgba(124, 92, 255, 0.12)",
                   backgroundColor: theme.backgroundElement,
                 },
               ]}
@@ -365,7 +365,7 @@ const styles = StyleSheet.create({
     width: 52,
     height: 52,
     borderRadius: 26,
-    backgroundColor: "rgba(99, 102, 241, 0.12)",
+    backgroundColor: "rgba(124, 92, 255, 0.12)",
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 12,

@@ -95,10 +95,10 @@ export default function LoginScreen() {
 
             <View style={styles.header}>
               <Text style={[styles.title, { color: theme.text }]}>
-                Welcome back
+                Welcome Back
               </Text>
               <Text style={[styles.subtitle, { color: theme.textSecondary }]}>
-                Access your Aether AI assistant account
+                Access your knowledge instantly
               </Text>
             </View>
 
@@ -119,7 +119,7 @@ export default function LoginScreen() {
                 value={email}
                 onChangeText={setEmail}
                 renderIcon={(focused) => (
-                  <MailIcon color={focused ? "#6366F1" : theme.textSecondary} />
+                  <MailIcon color={focused ? "#7C5CFF" : theme.textSecondary} />
                 )}
               />
 
@@ -133,12 +133,12 @@ export default function LoginScreen() {
                 value={password}
                 onChangeText={setPassword}
                 renderIcon={(focused) => (
-                  <LockIcon color={focused ? "#6366F1" : theme.textSecondary} />
+                  <LockIcon color={focused ? "#7C5CFF" : theme.textSecondary} />
                 )}
                 rightElement={
                   <TouchableOpacity activeOpacity={0.7}>
                     <Text
-                      style={[styles.forgotPasswordText, { color: "#6366F1" }]}
+                      style={[styles.forgotPasswordText, { color: "#7C5CFF" }]}
                     >
                       Forgot Password?
                     </Text>
@@ -173,7 +173,7 @@ export default function LoginScreen() {
                 onPress={() => router.push("/auth/signup")}
                 activeOpacity={0.7}
               >
-                <Text style={[styles.signUpLink, { color: "#6366F1" }]}>
+                <Text style={[styles.signUpLink, { color: "#7C5CFF" }]}>
                   Sign Up
                 </Text>
               </TouchableOpacity>
@@ -245,13 +245,13 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   submitButton: {
-    backgroundColor: "#6366F1",
+    backgroundColor: "#7C5CFF",
     height: 54,
     borderRadius: 16,
     justifyContent: "center",
     alignItems: "center",
     marginTop: Spacing.two,
-    shadowColor: "#6366F1",
+    shadowColor: "#7C5CFF",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 10,

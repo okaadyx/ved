@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import { getToken } from "../utils/auth";
+import { getApiUrl } from "../utils/config";
 import { RagApi } from "./rag";
 import { UserApi } from "./user";
 
@@ -8,7 +9,7 @@ export class Api {
   user: UserApi;
   rag: RagApi;
 
-  constructor(baseURL: string = "http://192.168.1.4:3000") {
+  constructor(baseURL: string = getApiUrl()) {
     this.axiosClient = axios.create({
       baseURL,
       headers: {

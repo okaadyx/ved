@@ -108,7 +108,7 @@ export default function CustomDrawerContent(props: any) {
         {/* Logo / Header */}
         <View style={styles.header}>
           <Text style={[styles.logoText, { color: theme.text }]}>
-            Aether AI
+            VED
           </Text>
         </View>
 
@@ -137,8 +137,8 @@ export default function CustomDrawerContent(props: any) {
               styles.kbButton,
               pathname.includes("documents")
                 ? {
-                    backgroundColor: "rgba(99, 102, 241, 0.12)",
-                    borderColor: "rgba(99, 102, 241, 0.35)",
+                    backgroundColor: "rgba(124, 92, 255, 0.12)",
+                    borderColor: "rgba(124, 92, 255, 0.35)",
                     borderWidth: 1,
                   }
                 : {
@@ -152,7 +152,7 @@ export default function CustomDrawerContent(props: any) {
             }}
             activeOpacity={0.8}
           >
-            <DatabaseIcon color={pathname.includes("documents") ? "#6366F1" : theme.text} />
+            <DatabaseIcon color={pathname.includes("documents") ? "#7C5CFF" : theme.text} />
             <Text
               style={[
                 styles.kbText,
@@ -173,7 +173,7 @@ export default function CustomDrawerContent(props: any) {
         {chatsLoading ? (
           <ActivityIndicator
             size="small"
-            color="#6366F1"
+            color="#7C5CFF"
             style={styles.loader}
           />
         ) : chats && chats.length > 0 ? (
@@ -185,8 +185,8 @@ export default function CustomDrawerContent(props: any) {
                 style={[
                   styles.chatItemWrapper,
                   isActive && {
-                    backgroundColor: "rgba(99, 102, 241, 0.12)",
-                    borderColor: "rgba(99, 102, 241, 0.35)",
+                    backgroundColor: "rgba(124, 92, 255, 0.12)",
+                    borderColor: "rgba(124, 92, 255, 0.35)",
                     borderWidth: 1,
                   },
                   !isActive && {
@@ -201,7 +201,7 @@ export default function CustomDrawerContent(props: any) {
                   activeOpacity={0.7}
                 >
                   <ChatIcon
-                    color={isActive ? "#6366F1" : theme.textSecondary}
+                    color={isActive ? "#7C5CFF" : theme.textSecondary}
                   />
                   <Text
                     numberOfLines={1}
@@ -237,11 +237,11 @@ export default function CustomDrawerContent(props: any) {
         style={[styles.footer, { borderTopColor: theme.backgroundSelected }]}
       >
         {userLoading ? (
-          <ActivityIndicator size="small" color="#6366F1" />
+          <ActivityIndicator size="small" color="#7C5CFF" />
         ) : user ? (
           <View style={styles.userSection}>
             <View style={styles.userMeta}>
-              <View style={[styles.avatar, { backgroundColor: "#6366F1" }]}>
+              <View style={[styles.avatar, { backgroundColor: "#7C5CFF" }]}>
                 <Text style={styles.avatarText}>
                   {user.name ? user.name[0].toUpperCase() : "U"}
                 </Text>
@@ -251,7 +251,7 @@ export default function CustomDrawerContent(props: any) {
                   style={[styles.userName, { color: theme.text }]}
                   numberOfLines={1}
                 >
-                  {user.name || "Aether User"}
+                  {user.name || "VED User"}
                 </Text>
                 <Text
                   style={[styles.userEmail, { color: theme.textSecondary }]}
@@ -281,7 +281,7 @@ export default function CustomDrawerContent(props: any) {
               Not logged in
             </Text>
             <TouchableOpacity
-              style={[styles.loginButton, { backgroundColor: "#6366F1" }]}
+              style={[styles.loginButton, { backgroundColor: "#7C5CFF" }]}
               onPress={() => router.replace("/auth/login" as any)}
               activeOpacity={0.8}
             >

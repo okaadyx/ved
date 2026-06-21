@@ -17,8 +17,8 @@ export function AuthBackground({ glowOpacityMultiplier = 1 }: AuthBackgroundProp
           {
             backgroundColor:
               scheme === "dark"
-                ? `rgba(139, 92, 246, ${0.05 * glowOpacityMultiplier})`
-                : `rgba(139, 92, 246, ${0.12 * glowOpacityMultiplier})`,
+                ? `rgba(124, 92, 255, ${0.05 * glowOpacityMultiplier})`
+                : `rgba(124, 92, 255, ${0.12 * glowOpacityMultiplier})`,
           },
         ]}
       />
@@ -28,8 +28,8 @@ export function AuthBackground({ glowOpacityMultiplier = 1 }: AuthBackgroundProp
           {
             backgroundColor:
               scheme === "dark"
-                ? `rgba(20, 184, 166, ${0.04 * glowOpacityMultiplier})`
-                : `rgba(20, 184, 166, ${0.08 * glowOpacityMultiplier})`,
+                ? `rgba(94, 234, 212, ${0.04 * glowOpacityMultiplier})`
+                : `rgba(94, 234, 212, ${0.08 * glowOpacityMultiplier})`,
           },
         ]}
       />

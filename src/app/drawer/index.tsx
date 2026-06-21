@@ -179,7 +179,7 @@ export default function HomeScreen() {
                 alignItems: "center",
               }}
             >
-              <ActivityIndicator size="large" color="#6366F1" />
+              <ActivityIndicator size="large" color="#7C5CFF" />
             </View>
           ) : messages.length === 0 ? (
             /* Welcome Empty State */
@@ -307,6 +307,6 @@ const styles = StyleSheet.create({
     width: 6,
     height: 6,
     borderRadius: 3,
-    backgroundColor: "#8B5CF6",
+    backgroundColor: "#7C5CFF",
   },
 });

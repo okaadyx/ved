@@ -84,9 +84,9 @@ export default function WelcomeScreen() {
           {/* Header Section */}
           <View style={styles.header}>
             <View style={[styles.logoBadge, { backgroundColor: theme.backgroundElement }]}>
-              <Text style={styles.logoEmoji}>✨</Text>
+              <Text style={styles.logoEmoji}>⚡</Text>
             </View>
-            <Text style={[styles.logoText, { color: theme.text }]}>Aether AI</Text>
+            <Text style={[styles.logoText, { color: theme.text }]}>VED</Text>
           </View>
 
           {/* Premium Interactive Orb Visualizer */}
@@ -95,20 +95,20 @@ export default function WelcomeScreen() {
               style={[
                 styles.orbOuterRing,
                 {
-                  borderColor: scheme === "dark" ? "rgba(139, 92, 246, 0.25)" : "rgba(139, 92, 246, 0.15)",
+                  borderColor: scheme === "dark" ? "rgba(124, 92, 255, 0.25)" : "rgba(124, 92, 255, 0.15)",
                   transform: [{ rotate: spin }],
                 },
               ]}
             >
-              <View style={[styles.orbNode, { backgroundColor: "#8B5CF6", top: 10, left: 10 }]} />
-              <View style={[styles.orbNode, { backgroundColor: "#14B8A6", bottom: 10, right: 10 }]} />
+              <View style={[styles.orbNode, { backgroundColor: "#7C5CFF", top: 10, left: 10 }]} />
+              <View style={[styles.orbNode, { backgroundColor: "#5EEAD4", bottom: 10, right: 10 }]} />
             </Animated.View>
 
             <Animated.View
               style={[
                 styles.orbInnerRing,
                 {
-                  borderColor: scheme === "dark" ? "rgba(20, 184, 166, 0.3)" : "rgba(20, 184, 166, 0.2)",
+                  borderColor: scheme === "dark" ? "rgba(94, 234, 212, 0.3)" : "rgba(94, 234, 212, 0.2)",
                   transform: [{ rotate: spin }, { scale: pulseAnim }],
                 },
               ]}
@@ -119,22 +119,22 @@ export default function WelcomeScreen() {
                 styles.orbCore,
                 {
                   transform: [{ scale: pulseAnim }],
-                  backgroundColor: scheme === "dark" ? "rgba(99, 102, 241, 0.15)" : "rgba(99, 102, 241, 0.1)",
-                  shadowColor: "#6366F1",
+                  backgroundColor: scheme === "dark" ? "rgba(124, 92, 255, 0.15)" : "rgba(124, 92, 255, 0.1)",
+                  shadowColor: "#7C5CFF",
                 },
               ]}
             >
-              <Text style={{ fontSize: 48 }}>🤖</Text>
+              <Text style={{ fontSize: 48 }}>🧠</Text>
             </Animated.View>
           </View>
 
           {/* Text Info */}
           <View style={styles.textGroup}>
             <Text style={[styles.title, { color: theme.text }]}>
-              Elevate Your{"\n"}Intelligence
+              Meet VED
             </Text>
             <Text style={[styles.subtitle, { color: theme.textSecondary }]}>
-              Experience seamless conversation, smart drafts, and effortless answers powered by Aether's contextual intelligence engine.
+              Your Personal Knowledge AI
             </Text>
           </View>
 
@@ -295,12 +295,12 @@ const styles = StyleSheet.create({
     marginTop: Spacing.two,
   },
   primaryButton: {
-    backgroundColor: "#6366F1",
+    backgroundColor: "#7C5CFF",
     height: 54,
     borderRadius: 16,
     justifyContent: "center",
     alignItems: "center",
-    shadowColor: "#6366F1",
+    shadowColor: "#7C5CFF",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 10,

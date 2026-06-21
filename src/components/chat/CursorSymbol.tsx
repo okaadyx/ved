@@ -28,7 +28,7 @@ export const CursorSymbol = () => {
       style={{
         opacity: blinkAnim,
         fontSize: 16,
-        color: "#8B5CF6",
+        color: "#7C5CFF",
         fontWeight: "bold",
       }}
     >

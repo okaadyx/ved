@@ -3,16 +3,8 @@ import { FlatList } from "react-native";
 import axios from "axios";
 import { Message } from "@/types/chat";
 import { getToken } from "@/utils/auth";
+import { getApiUrl, getWsUrl } from "@/utils/config";
 import { useQueryClient } from "@tanstack/react-query";
-
-const getApiUrl = () => {
-  return "http://192.168.1.4:3000";
-};
-
-const getWsUrl = () => {
-  const apiUrl = getApiUrl();
-  return apiUrl.replace(/^http/, "ws") + "/rag/chat";
-};
 
 // Global cache for access token
 let cachedToken: string | null = null;
@@ -25,7 +17,7 @@ const fetchToken = async (): Promise<string> => {
   if (cachedToken) return cachedToken;
 
   const apiUrl = getApiUrl();
-  const testEmail = "testuser@aether.ai";
+  const testEmail = "testuser@ved.ai";
   const testPassword = "Password123!";
   const testName = "Test User";
 

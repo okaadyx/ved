@@ -5,6 +5,7 @@ import {
   ActivityIndicator,
   Clipboard,
   ColorSchemeName,
+  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -103,7 +104,7 @@ export const MessageItem = React.memo(({ message, isStreaming, theme, scheme }: 
             marginVertical: 4,
           }}
         >
-          <ActivityIndicator size="small" color="#8B5CF6" />
+          <ActivityIndicator size="small" color="#7C5CFF" />
           <Text style={{ fontSize: 14, color: theme.textSecondary }}>
             Generating...
           </Text>
@@ -291,14 +292,17 @@ export const MessageItem = React.memo(({ message, isStreaming, theme, scheme }: 
     >
       {!isUser && (
         <View style={[styles.assistantAvatar, { backgroundColor: theme.backgroundElement }]}>
-          <Text style={{ fontSize: 16 }}>🤖</Text>
+          <Image
+            source={require("@/assets/images/icon.png")}
+            style={styles.avatarImage}
+          />
         </View>
       )}
 
       <View style={!isUser ? styles.assistantContentContainer : undefined}>
         {!isUser && (
           <Text style={[styles.assistantName, { color: theme.textSecondary }]}>
-            Aether AI
+            VED
           </Text>
         )}
 
@@ -311,8 +315,8 @@ export const MessageItem = React.memo(({ message, isStreaming, theme, scheme }: 
                 {
                   backgroundColor:
                     scheme === "dark"
-                      ? "rgba(139, 92, 246, 0.2)"
-                      : "rgba(139, 92, 246, 0.08)",
+                      ? "rgba(124, 92, 255, 0.2)"
+                      : "rgba(124, 92, 255, 0.08)",
                 },
               ]
               : styles.assistantBubble,
@@ -369,6 +373,11 @@ const styles = StyleSheet.create({
     marginTop: 4,
     borderWidth: 1,
     borderColor: "rgba(128, 128, 128, 0.12)",
+  },
+  avatarImage: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 15,
   },
   assistantContentContainer: {
     flex: 1,

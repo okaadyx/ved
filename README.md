@@ -1,6 +1,6 @@
-# 🌌 Aether Assistant — Premium Mobile AI Interface
+# ⚡ VED Assistant — Premium Mobile AI Interface
 
-A production-grade, fintech-quality React Native Android assistant application designed to deliver real-time Retrieval-Augmented Generation (RAG) capabilities. Built on a modern **Glassmorphism** design system with Expo and TypeScript, Aether Assistant pairs with the Aether AI backend to manage conversations, view document analytics, and orchestrate agent interactions.
+A production-grade, fintech-quality React Native Android assistant application designed to deliver real-time Retrieval-Augmented Generation (RAG) capabilities. Built on a modern **Glassmorphism** design system with Expo and TypeScript, VED Assistant pairs with the VED AI backend to manage conversations, view document analytics, and orchestrate agent interactions.
 
 ---
 
@@ -21,7 +21,7 @@ A production-grade, fintech-quality React Native Android assistant application d
 graph TD
     User([User Action]) -->|Inputs Query| Screen[Chat Screen]
     Screen -->|Hook: useChatStream| WS[WebSocket Client]
-    WS -->|ws://192.168.1.4:3000/rag/chat?token=JWT| Server[Aether AI Backend]
+    WS -->|ws://192.168.1.4:3000/rag/chat?token=JWT| Server[VED AI Backend]
     
     Server -->|type: content / Token Stream| WS
     WS -->|Progressive Render| Screen
@@ -54,7 +54,7 @@ graph TD
 ```text
 src/
 ├── app/                  # File-based routes (Expo Router navigation)
-│   ├── auth/             # Onboarding, login, and registration screens
+├── auth/             # Onboarding, login, and registration screens
 │   ├── drawer/           # Secure layout containing home chat and document screens
 │   │   ├── index.tsx     # Principal Chat interface
 │   │   ├── documents.tsx # Knowledge Base Document center

@@ -48,7 +48,7 @@ export function AuthInput({
           styles.inputFieldWrapper,
           {
             backgroundColor: theme.backgroundElement,
-            borderColor: focused ? "#6366F1" : "rgba(128, 128, 128, 0.12)",
+            borderColor: focused ? "#7C5CFF" : "rgba(128, 128, 128, 0.12)",
             borderWidth: focused ? 1.5 : 1,
           },
         ]}

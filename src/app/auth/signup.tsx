@@ -119,7 +119,7 @@ export default function SignupScreen() {
                 Create Account
               </Text>
               <Text style={[styles.subtitle, { color: theme.textSecondary }]}>
-                Join Aether AI and experience intelligent workspace
+                Join VED and experience intelligent workspace
                 collaboration
               </Text>
             </View>
@@ -140,7 +140,7 @@ export default function SignupScreen() {
                 value={name}
                 onChangeText={setName}
                 renderIcon={(focused) => (
-                  <UserIcon color={focused ? "#6366F1" : theme.textSecondary} />
+                  <UserIcon color={focused ? "#7C5CFF" : theme.textSecondary} />
                 )}
               />
 
@@ -154,7 +154,7 @@ export default function SignupScreen() {
                 value={email}
                 onChangeText={setEmail}
                 renderIcon={(focused) => (
-                  <MailIcon color={focused ? "#6366F1" : theme.textSecondary} />
+                  <MailIcon color={focused ? "#7C5CFF" : theme.textSecondary} />
                 )}
               />
 
@@ -168,7 +168,7 @@ export default function SignupScreen() {
                 value={password}
                 onChangeText={setPassword}
                 renderIcon={(focused) => (
-                  <LockIcon color={focused ? "#6366F1" : theme.textSecondary} />
+                  <LockIcon color={focused ? "#7C5CFF" : theme.textSecondary} />
                 )}
               />
 
@@ -182,7 +182,7 @@ export default function SignupScreen() {
                 value={confirmPassword}
                 onChangeText={setConfirmPassword}
                 renderIcon={(focused) => (
-                  <LockIcon color={focused ? "#6366F1" : theme.textSecondary} />
+                  <LockIcon color={focused ? "#7C5CFF" : theme.textSecondary} />
                 )}
               />
 
@@ -213,7 +213,7 @@ export default function SignupScreen() {
                 onPress={() => router.push("/auth/login")}
                 activeOpacity={0.7}
               >
-                <Text style={[styles.signUpLink, { color: "#6366F1" }]}>
+                <Text style={[styles.signUpLink, { color: "#7C5CFF" }]}>
                   Log In
                 </Text>
               </TouchableOpacity>
@@ -281,13 +281,13 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   submitButton: {
-    backgroundColor: "#6366F1",
+    backgroundColor: "#7C5CFF",
     height: 54,
     borderRadius: 16,
     justifyContent: "center",
     alignItems: "center",
     marginTop: Spacing.two,
-    shadowColor: "#6366F1",
+    shadowColor: "#7C5CFF",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 10,

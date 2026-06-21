@@ -2,6 +2,7 @@ import { Spacing } from "@/constants/theme";
 import { useNavigation } from "expo-router";
 import {
   Animated,
+  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -31,7 +32,10 @@ export const ChatHeader = ({ theme, statusPulseAnim }: ChatHeaderProps) => {
             style={styles.headerAvatar}
             onPress={() => (navigation as any).toggleDrawer()}
           >
-            <Text style={{ fontSize: 18 }}>🤖</Text>
+            <Image
+              source={require("@/assets/images/icon.png")}
+              style={styles.avatarImage}
+            />
           </TouchableOpacity>
           <Animated.View
             style={[
@@ -47,7 +51,7 @@ export const ChatHeader = ({ theme, statusPulseAnim }: ChatHeaderProps) => {
               { color: theme.text, fontWeight: "700" },
             ]}
           >
-            Aether AI
+            VED
           </Text>
           <Text style={[styles.headerSubtitle, { color: theme.textSecondary }]}>
             Active Now
@@ -81,9 +85,14 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 18,
-    backgroundColor: "rgba(139, 92, 246, 0.15)",
+    backgroundColor: "rgba(124, 92, 255, 0.15)",
     justifyContent: "center",
     alignItems: "center",
+  },
+  avatarImage: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 18,
   },
   activeStatusDot: {
     position: "absolute",

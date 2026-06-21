@@ -53,7 +53,7 @@ export const Suggestions = ({ theme, pulseAnim, onSelectSuggestion }: Suggestion
       </Animated.View>
 
       <Text style={[styles.emptyTitle, { color: theme.text }]}>
-        Chat with Aether
+        Chat with VED
       </Text>
 
       <Text
@@ -103,13 +103,13 @@ const styles = StyleSheet.create({
     width: 96,
     height: 96,
     borderRadius: 48,
-    backgroundColor: "rgba(99, 102, 241, 0.12)",
+    backgroundColor: "rgba(124, 92, 255, 0.12)",
     justifyContent: "center",
     alignItems: "center",
     marginBottom: Spacing.four,
     ...Platform.select({
       web: {
-        boxShadow: "0 0 30px rgba(99, 102, 241, 0.2)",
+        boxShadow: "0 0 30px rgba(124, 92, 255, 0.2)",
       },
     }),
   },
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: "#6366F1",
+    backgroundColor: "#7C5CFF",
     justifyContent: "center",
     alignItems: "center",
   },
