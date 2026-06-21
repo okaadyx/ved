@@ -1,43 +1,18 @@
-# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+# Root GitIgnore for VED Monorepo
 
-# dependencies
-node_modules/
+# Frontend specific
+frontend/node_modules/
+frontend/.expo/
+frontend/dist/
 
-# Expo
-.expo/
-dist/
-web-build/
-expo-env.d.ts
+# Backend specific
+backend/node_modules/
+backend/dist/
+backend/uploads/
+backend/.env
 
-# Native
-.kotlin/
-*.orig.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
-
-# Metro
-.metro-health-check*
-
-# debug
-npm-debug.*
-yarn-debug.*
-yarn-error.*
-
-# macOS
+# Logs and system files
+*.log
 .DS_Store
-*.pem
-
-# local env files
-.env*.local
-
-# typescript
-*.tsbuildinfo
-
-example
-
-# generated native folders
-/ios
-/android
+Thumbs.db
+node_modules
