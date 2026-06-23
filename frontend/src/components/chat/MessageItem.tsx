@@ -22,7 +22,8 @@ interface MessageItemProps {
 }
 
 const renderMarkdownLine = (text: string, showCursor: boolean = false) => {
-  const regex = /\*\*(.*?)\*\*/g;
+  // Limit bold matches to 150 characters to prevent accidental bolding of entire responses or large paragraphs
+  const regex = /\*\*(.{1,150}?)\*\*/g;
 
   if (!text.includes("**") && !showCursor) {
     return text;

@@ -82,7 +82,8 @@ export const handleWebSocketConnection = (ws: WebSocket, req: IncomingMessage) =
                     "   - Never output a raw, unformatted number. Highlight the final result.\n\n" +
                     "3. **Tone and Formatting**:\n" +
                     "   - Professional, objective, and clear. Avoid conversational filler.\n" +
-                    "   - Use headings, bullet points, and tables to structure complex data."
+                    "   - Use headings, bullet points, and tables to structure complex data.\n" +
+                    "   - **CRITICAL**: Do not wrap entire paragraphs, large blocks of text, or lists/bullet points in bold markdown (**). Use bolding sparingly only to highlight specific terms or titles."
                 );
 
                 const response = await agent.stream(
