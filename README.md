@@ -269,6 +269,26 @@ npx tsc --noEmit
 npx expo export
 ```
 
+#### Build Android release APK (Local):
+```bash
+cd frontend
+npx expo prebuild
+cd android
+./gradlew assembleRelease
+# Output will be generated at frontend/android/app/build/outputs/apk/release/app-release.apk
+```
+
+#### Build Android release APK (EAS Cloud):
+```bash
+cd frontend
+npx eas-cli build --platform android --profile preview
+```
+
+#### 📲 Access Compiled Release APK:
+* **Workspace Root**: [app-release.apk](./app-release.apk)
+* **Standard Build Output**: [app-release.apk](./frontend/android/app/build/outputs/apk/release/app-release.apk)
+
+
 ---
 
 ## ⚙️ 8. Environment Variables

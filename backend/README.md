@@ -1,6 +1,6 @@
-# 🌌 Aether AI Backend — Enterprise RAG & Agentic Gateway
+# 🌌 VED Backend — Enterprise RAG & Agentic Gateway
 
-The production-grade, high-performance backend server powering the Aether AI Assistant ecosystem. Built with a Node.js + TypeScript stack, this gateway handles secure JWT authentication, document parsing and ingestion, and real-time agentic orchestration via LangChain, utilizing Supabase (pgvector) and PostgreSQL.
+The production-grade, high-performance backend server powering the VED Assistant ecosystem. Built with a Node.js + TypeScript stack, this gateway handles secure JWT authentication, document parsing and ingestion, and real-time agentic orchestration via LangChain, utilizing Supabase (pgvector) and PostgreSQL.
 
 ---
 
@@ -76,7 +76,7 @@ PORT=3000
 NODE_ENV=production
 
 # Database Connections
-DATABASE_URL="postgresql://user:password@localhost:5432/aether_db"
+DATABASE_URL="postgresql://user:password@localhost:5432/ved_db"
 SUPABASE_URL="https://your-supabase-project.supabase.co"
 SUPABASE_SERVICE_ROLE_KEY="your-supabase-service-role-key"
 
