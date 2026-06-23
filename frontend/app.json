@@ -11,6 +11,7 @@
       "icon": "./assets/expo.icon"
     },
     "android": {
+      "package": "com.okaadyx.ved",
       "adaptiveIcon": {
         "backgroundColor": "#09090B",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
@@ -38,6 +39,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "f04d3736-2318-43b7-a485-e3e643cb8188"
+      }
+    },
+    "owner": "okaady"
   }
 }

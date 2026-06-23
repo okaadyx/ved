@@ -5,7 +5,8 @@ import * as z from "zod";
 import { SupabaseVectorStore } from "@langchain/community/vectorstores/supabase";
 import { supabaseClient } from "../utils/supabase.js";
 import { OpenAIEmbeddings } from "@langchain/openai";
-
+import {tavily} from "@tavily/core"
+import { log } from "node:console";
 const embeddings = new OpenAIEmbeddings({
     model: process.env.AI_EMBEDDING_MODEL || "text-embedding-3-small",
     configuration: { baseURL: process.env.AI_ENDPOINT },
@@ -62,6 +63,31 @@ Current weather in ${data.name}, ${data.sys.country}:
     }
 );
 
+const webSearchTool = tool(async({query})=>{
+    try {
+        const apiKey = process.env.TAVILY_API_KEY;
+        if (!apiKey) {
+            throw new Error("TAVILY_API_KEY is not defined");
+        }
+
+        const tly = tavily({ apiKey });
+
+        const response = await tly.research(query)
+
+        return JSON.stringify(response)
+    } catch (error) {
+        console.log(error);
+        
+    }
+},{
+    name:"web_search",
+    description:"Perform web search operation",
+    schema:z.object({
+        query:z.string().describe("The search query to look up on the internet")
+    })
+})
+
+
 const calculatorTool = tool(async (input: any) => {
     try {
         const result = evaluate(input.expression);
@@ -116,4 +142,4 @@ const knowledgeBaseTool = tool(async (input: any, config?: any) => {
         query: z.string().describe("The search query to look up in the knowledge base documents")
     })
 });
-export { calculatorTool, weatherTool, knowledgeBaseTool }
+export { calculatorTool, weatherTool, knowledgeBaseTool,webSearchTool }
