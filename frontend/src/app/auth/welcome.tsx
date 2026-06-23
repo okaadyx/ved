@@ -16,14 +16,14 @@ export default function WelcomeScreen() {
   const scheme = useColorScheme();
   const theme = Colors[scheme === "dark" ? "dark" : "light"];
 
-  // Animation Values
+
   const pulseAnim = useRef(new Animated.Value(1)).current;
   const rotateAnim = useRef(new Animated.Value(0)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(30)).current;
 
   useEffect(() => {
-    // Entrance animations
+
     Animated.parallel([
       Animated.timing(fadeAnim, {
         toValue: 1,
@@ -38,7 +38,7 @@ export default function WelcomeScreen() {
       }),
     ]).start();
 
-    // Orb Pulsing loop
+
     Animated.loop(
       Animated.sequence([
         Animated.timing(pulseAnim, {
@@ -54,7 +54,6 @@ export default function WelcomeScreen() {
       ])
     ).start();
 
-    // Constant slow rotation
     Animated.loop(
       Animated.timing(rotateAnim, {
         toValue: 1,
@@ -71,7 +70,7 @@ export default function WelcomeScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-      {/* Background Aurora Mesh Glows */}
+
       <AuthBackground glowOpacityMultiplier={scheme === "dark" ? 1.6 : 1.25} />
 
       <SafeAreaView style={styles.safeArea}>
@@ -81,15 +80,8 @@ export default function WelcomeScreen() {
             { opacity: fadeAnim, transform: [{ translateY: slideAnim }] },
           ]}
         >
-          {/* Header Section */}
-          <View style={styles.header}>
-            <View style={[styles.logoBadge, { backgroundColor: theme.backgroundElement }]}>
-              <Text style={styles.logoEmoji}>⚡</Text>
-            </View>
-            <Text style={[styles.logoText, { color: theme.text }]}>VED</Text>
-          </View>
 
-          {/* Premium Interactive Orb Visualizer */}
+          <View style={styles.header} />
           <View style={styles.orbWrapper}>
             <Animated.View
               style={[
@@ -128,7 +120,6 @@ export default function WelcomeScreen() {
             </Animated.View>
           </View>
 
-          {/* Text Info */}
           <View style={styles.textGroup}>
             <Text style={[styles.title, { color: theme.text }]}>
               Meet VED
@@ -138,7 +129,6 @@ export default function WelcomeScreen() {
             </Text>
           </View>
 
-          {/* Action Buttons */}
           <View style={styles.buttonGroup}>
             <TouchableOpacity
               style={styles.primaryButton}
@@ -167,7 +157,7 @@ export default function WelcomeScreen() {
             <TouchableOpacity
               style={styles.guestLink}
               activeOpacity={0.7}
-              onPress={() => router.replace("/drawer/index" as any)}
+              onPress={() => router.push("/drawer")}
             >
               <Text style={[styles.guestLinkText, { color: theme.textSecondary }]}>
                 Continue as Guest
@@ -175,7 +165,6 @@ export default function WelcomeScreen() {
             </TouchableOpacity>
           </View>
 
-          {/* Footer */}
           <Text style={[styles.footerText, { color: theme.textSecondary }]}>
             By signing up, you agree to our Terms of Service & Privacy Policy.
           </Text>

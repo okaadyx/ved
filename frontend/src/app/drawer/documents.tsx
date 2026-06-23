@@ -21,7 +21,6 @@ import {
   useUploadDocumentMutation,
 } from "@/hooks/queries";
 
-// Icon components built with native Views
 const ChevronLeftIcon = ({ color }: { color: string }) => (
   <View style={styles.iconContainer}>
     <View style={[styles.chevron, { borderColor: color }]} />
@@ -177,7 +176,6 @@ export default function DocumentsScreen() {
                 Add custom documentation to train VED. Once uploaded, the agent will query it to answer your questions.
               </Text>
 
-              {/* Upload Box */}
               <View
                 style={[
                   styles.uploadBox,
@@ -522,7 +520,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  // Icon drawing styles
   iconContainer: {
     width: 18,
     height: 18,

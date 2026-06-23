@@ -48,13 +48,17 @@ Mobile devices operate on volatile networks where persistent connections are dif
 
 ## 📸 3. Screenshots
 
-| Home & Chat Interface | Knowledge Base Hub | Auth Screens |
-|:---:|:---:|:---:|
-| ![Chat Interface Placeholder](https://placehold.co/300x600/09090B/FFFFFF/png?text=VED+Glassmorphic+Chat) | ![Document Manager Placeholder](https://placehold.co/300x600/09090B/FFFFFF/png?text=Knowledge+Base+Manager) | ![Authentication Screen Placeholder](https://placehold.co/300x600/09090B/FFFFFF/png?text=Sign+In+%26+Sign+Up) |
+| Welcome Screen | Login Screen | Signup Screen |
+| :-: | :-: | :-: |
+| <img src="frontend/assets/screenshots/welcome.jpeg" width="260" alt="Welcome Screen" /> | <img src="frontend/assets/screenshots/login.jpeg" width="260" alt="Login Screen" /> | <img src="frontend/assets/screenshots/signup.jpeg" width="260" alt="Signup Screen" /> |
 
-| Settings & Profile | Dark Mode Showcase | Mobile Tab Navigation |
-|:---:|:---:|:---:|
-| ![Settings Screen Placeholder](https://placehold.co/300x600/09090B/FFFFFF/png?text=Settings+%26+Profile) | ![Dark Mode Showcase Placeholder](https://placehold.co/300x600/09090B/FFFFFF/png?text=Dark+Mode+Mesh+Visuals) | ![Mobile View Placeholder](https://placehold.co/300x600/09090B/FFFFFF/png?text=Tab+Layouts+%26+Drawer) |
+| Home Screen | Chat Screen | Navigation Drawer |
+| :-: | :-: | :-: |
+| <img src="frontend/assets/screenshots/home.jpeg" width="260" alt="Home Screen" /> | <img src="frontend/assets/screenshots/chat%20screen.jpeg" width="260" alt="Chat Screen" /> | <img src="frontend/assets/screenshots/drawer.jpeg" width="260" alt="Navigation Drawer" /> |
+
+| Knowledge Base Hub |
+| :-: |
+| <img src="frontend/assets/screenshots/knowledge%20base.jpeg" width="260" alt="Knowledge Base" /> |
 
 ---
 

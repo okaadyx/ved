@@ -115,13 +115,11 @@ export const MessageItem = React.memo(({ message, isStreaming, theme, scheme }: 
 
     const parts = content.split("```");
     return parts.map((part, index) => {
-      // Odd indices are code blocks
       if (index % 2 === 1) {
         const lines = part.split("\n");
         const lang = lines[0].trim();
         const code = lines.slice(1).join("\n").trim();
 
-        // Show cursor inside code block if it's the very end and streaming
         const showCursorHere = isStreaming && index === parts.length - 1;
 
         return (
@@ -135,7 +133,6 @@ export const MessageItem = React.memo(({ message, isStreaming, theme, scheme }: 
         );
       }
 
-      // Even indices are text blocks (can contain paragraphs, headers, lists)
       const blocks = part.split("\n\n");
       const isLastPart = index === parts.length - 1;
 
@@ -149,7 +146,6 @@ export const MessageItem = React.memo(({ message, isStreaming, theme, scheme }: 
               return null;
             }
 
-            // 1. Headers Check
             const headingMatch = block.match(/^(#{1,6})\s+([\s\S]*)$/);
             if (headingMatch) {
               const level = headingMatch[1].length;
@@ -177,7 +173,6 @@ export const MessageItem = React.memo(({ message, isStreaming, theme, scheme }: 
               );
             }
 
-            // 2. List Check
             const isNumberedList = /^\s*\d+\.\s+/.test(block);
             const isBulletList = /^\s*([•\-*])\s+/.test(block);
 
@@ -238,7 +233,6 @@ export const MessageItem = React.memo(({ message, isStreaming, theme, scheme }: 
                       );
                     }
 
-                    // Fallback for lines inside a list block that aren't prefixed
                     if (trimmedLine === "") return null;
                     return (
                       <Text
@@ -257,7 +251,6 @@ export const MessageItem = React.memo(({ message, isStreaming, theme, scheme }: 
               );
             }
 
-            // 3. Default Paragraph
             const lines = block.split("\n");
             return (
               <Text

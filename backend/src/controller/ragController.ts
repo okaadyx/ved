@@ -32,13 +32,11 @@ export const chatController = async (req: AuthenticatedRequest, res: Response) =
             return errorResponse(res, "User not authenticated", 401);
         }
 
-        // If no chatId is provided, create a new chat for this user
         if (!chatId) {
             const newChat = await rag.createChat(userId);
             chatId = newChat.id;
             res.write(`data: ${JSON.stringify({ type: "chatId", chatId })}\n\n`);
         } else {
-            // Verify chat belongs to this user
             const chat = await prisma.chat.findFirst({
                 where: { id: chatId as string, userId }
             });
@@ -47,10 +45,8 @@ export const chatController = async (req: AuthenticatedRequest, res: Response) =
             }
         }
 
-        // Save user message
         await rag.setMessages(chatId, query);
 
-        // Fetch history
         let history = (await rag.getMessages(chatId) ?? []).slice(-10);
         const systemMessage = new SystemMessage(
             "You are Aether AI, an elite, highly professional enterprise assistant. Your core directive is to provide precise, structured, and action-oriented responses.\n\n" +
@@ -94,7 +90,6 @@ export const chatController = async (req: AuthenticatedRequest, res: Response) =
             }
         }
 
-        // Save AI response
         await rag.setMessages(chatId, fullResponse, "ai");
         res.end();
     } catch (error) {
@@ -123,7 +118,6 @@ const getTargetBucket = async (bucketName: string): Promise<string> => {
 
         if (createError) {
             console.error(`Failed to create bucket '${bucketName}':`, createError.message);
-            // Fallback to lowercase 'public'
             const { error: createErrorLower } = await supabaseClient.storage.createBucket("public", {
                 public: true,
             });
@@ -167,10 +161,8 @@ export const knowledgeBaseController = async (req: AuthenticatedRequest, res: Re
             }
         );
 
-        // Read file content as buffer for Supabase Storage upload
         const fileBuffer = fs.readFileSync(filePath);
         
-        // Upload file to Supabase Storage
         const targetBucket = await getTargetBucket("Public");
         const fileKey = `${userId}/${req.file.originalname}`;
         const { data: uploadData, error: uploadError } = await supabaseClient.storage
@@ -185,12 +177,10 @@ export const knowledgeBaseController = async (req: AuthenticatedRequest, res: Re
             throw new Error(`Failed to upload document to Supabase Storage: ${uploadError.message}`);
         }
 
-        // Get public URL of the uploaded document
         const { data: { publicUrl } } = supabaseClient.storage
             .from(targetBucket)
             .getPublicUrl(fileKey);
 
-        // Delete temporary local file
         try {
             fs.unlinkSync(filePath);
         } catch (unlinkErr) {
@@ -202,7 +192,6 @@ export const knowledgeBaseController = async (req: AuthenticatedRequest, res: Re
             publicUrl 
         });
     } catch (error) {
-        // Clean up temporary local file if any error occurs
         if (req.file?.path) {
             try {
                 const filePath = path.resolve(req.file.path);
@@ -246,7 +235,6 @@ export const getChatMessagesController = async (req: AuthenticatedRequest, res: 
             return errorResponse(res, "Invalid or missing chat ID", 400);
         }
 
-        // Verify ownership
         const chat = await prisma.chat.findFirst({
             where: { id: chatId, userId },
             include: {
@@ -329,7 +317,6 @@ export const deleteDocumentController = async (req: AuthenticatedRequest, res: R
             return errorResponse(res, "Filename is required", 400);
         }
 
-        // Delete from Supabase Storage
         const targetBucket = await getTargetBucket("Public");
         const fileKey = `${userId}/${filename}`;
         const { data: deleteData, error: deleteError } = await supabaseClient.storage
@@ -338,7 +325,6 @@ export const deleteDocumentController = async (req: AuthenticatedRequest, res: R
 
         if (deleteError) {
             console.error("Supabase Storage deletion error:", deleteError);
-            // We proceed with database cleanup even if Supabase deletion fails
         }
 
         const result = await prisma.$executeRaw`

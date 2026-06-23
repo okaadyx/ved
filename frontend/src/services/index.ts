@@ -17,7 +17,6 @@ export class Api {
       },
     });
 
-    // Add interceptor to dynamically inject the auth token on every request
     this.axiosClient.interceptors.request.use(
       async (config) => {
         try {

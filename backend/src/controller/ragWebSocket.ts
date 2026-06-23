@@ -12,7 +12,6 @@ const JWT_SECRET = process.env.JWT_SECRET || "aether-jwt-secret-key-change-me-in
 export const handleWebSocketConnection = (ws: WebSocket, req: IncomingMessage) => {
     console.log("New WebSocket connection established");
 
-    // Parse token from query string (e.g. /rag/chat?token=XYZ)
     const parsedUrl = url.parse(req.url || "", true);
     const token = parsedUrl.query.token as string;
 
@@ -62,7 +61,6 @@ export const handleWebSocketConnection = (ws: WebSocket, req: IncomingMessage) =
                         data: { userId }
                     });
                     chatId = chat.id;
-                    // Send the new chatId to client
                     ws.send(JSON.stringify({ type: "chatId", chatId }));
                 }
 
@@ -117,7 +115,6 @@ export const handleWebSocketConnection = (ws: WebSocket, req: IncomingMessage) =
                     }
                 }
 
-                // Save assistant message to DB
                 await prisma.message.create({
                     data: {
                         role: "ai",
@@ -126,7 +123,6 @@ export const handleWebSocketConnection = (ws: WebSocket, req: IncomingMessage) =
                     }
                 });
 
-                // Send completion signal
                 ws.send(JSON.stringify({ type: "done" }));
             } else {
                 ws.send(JSON.stringify({ type: "error", message: "Unknown request type" }));

@@ -13,7 +13,6 @@ import { authenticateToken } from "../middleware/authMiddleware.js";
 
 const router = Router();
 
-// Protect all RAG routes
 router.use(authenticateToken as any);
 
 router.post("/chat", chatController as any)
@@ -22,7 +21,6 @@ router.get("/chats", getUserChatsController as any)
 router.get("/chats/:chatId", getChatMessagesController as any)
 router.delete("/chats/:chatId", deleteChatController as any)
 
-// Knowledge base management routes
 router.get("/documents", getDocumentsController as any)
 router.delete("/documents/:filename", deleteDocumentController as any)
 

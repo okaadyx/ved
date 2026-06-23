@@ -6,11 +6,9 @@ import { getToken } from "@/utils/auth";
 import { getApiUrl, getWsUrl } from "@/utils/config";
 import { useQueryClient } from "@tanstack/react-query";
 
-// Global cache for access token
 let cachedToken: string | null = null;
 
 const fetchToken = async (): Promise<string> => {
-  // Try to use the securely stored session token first
   const storedToken = await getToken();
   if (storedToken) return storedToken;
 
@@ -68,7 +66,6 @@ export const useChatStream = () => {
   const [isStreamingActive, setIsStreamingActive] = useState(false);
   const flatListRef = useRef<FlatList>(null);
 
-  // Clean up references for intervals & socket
   const streamingIntervalRef = useRef<any>(null);
   const webSocketRef = useRef<WebSocket | null>(null);
   const streamingBufferRef = useRef("");
@@ -94,7 +91,6 @@ export const useChatStream = () => {
     setIsTyping(false);
   }, [cleanupStream]);
 
-  // Clean up on unmount
   useEffect(() => {
     return () => {
       cleanupStream();
@@ -109,7 +105,6 @@ export const useChatStream = () => {
       const messageText = textToSend || inputText;
       if (!messageText.trim()) return;
 
-      // Clean up any existing stream first
       cleanupStream();
 
       if (streamingIntervalRef.current) {
@@ -137,7 +132,6 @@ export const useChatStream = () => {
 
       const assistantMsgId = (Date.now() + 1).toString();
 
-      // Fetch JWT token automatically
       let token: string;
       try {
         token = await fetchToken();
@@ -158,7 +152,6 @@ export const useChatStream = () => {
 
       const wsUrl = `${getWsUrl()}?token=${encodeURIComponent(token)}`;
 
-      // Initialize stream state
       streamingBufferRef.current = "";
       let assistantMessageCreated = false;
 
@@ -167,7 +160,6 @@ export const useChatStream = () => {
       const ws = new WebSocket(wsUrl);
       webSocketRef.current = ws;
 
-      // Start a throttled flush interval to update React state
       flushIntervalRef.current = setInterval(() => {
         const bufferedContent = streamingBufferRef.current;
         if (!bufferedContent) return;
@@ -199,7 +191,6 @@ export const useChatStream = () => {
           }
         });
 
-        // Scroll to end (non-animated for performance during fast stream)
         flatListRef.current?.scrollToEnd({ animated: false });
       }, 80);
 

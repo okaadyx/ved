@@ -43,7 +43,6 @@ export default function HomeScreen() {
     handleClear,
   } = useChatStream();
 
-  // Load chat session if selected from history
   const { data: dbMessages, isFetching } = useChatMessagesQuery(
     routeChatId && routeChatId !== "" ? routeChatId : null,
   );
@@ -51,7 +50,6 @@ export default function HomeScreen() {
   useEffect(() => {
     if (routeChatId && routeChatId !== "") {
       if (dbMessages) {
-        // Map messages to internal format
         const mapped = dbMessages.map((msg: any) => ({
           id: msg.id,
           role: msg.role as "user" | "assistant",
@@ -62,12 +60,10 @@ export default function HomeScreen() {
         setChatId(routeChatId);
       }
     } else {
-      // Starting a new chat
       handleClear();
     }
   }, [routeChatId, dbMessages]);
 
-  // Animation Refs
   const pulseAnim = useRef(new Animated.Value(1)).current;
   const statusPulseAnim = useRef(new Animated.Value(1)).current;
   const dot1 = useRef(new Animated.Value(0.3)).current;
@@ -75,7 +71,6 @@ export default function HomeScreen() {
   const dot3 = useRef(new Animated.Value(0.3)).current;
 
   useEffect(() => {
-    // Pulse animation for AI Avatar when empty
     const pulse = Animated.loop(
       Animated.sequence([
         Animated.timing(pulseAnim, {
@@ -91,7 +86,6 @@ export default function HomeScreen() {
       ]),
     );
 
-    // Active status indicator pulsing animation
     const statusPulse = Animated.loop(
       Animated.sequence([
         Animated.timing(statusPulseAnim, {
@@ -116,7 +110,6 @@ export default function HomeScreen() {
     };
   }, []);
 
-  // Animation for the typing indicator dot loaders
   useEffect(() => {
     let anim1: Animated.CompositeAnimation | null = null;
     let anim2: Animated.CompositeAnimation | null = null;
@@ -182,7 +175,6 @@ export default function HomeScreen() {
               <ActivityIndicator size="large" color="#7C5CFF" />
             </View>
           ) : messages.length === 0 ? (
-            /* Welcome Empty State */
             <FlatList
               style={{ flex: 1 }}
               data={[]}
@@ -198,7 +190,6 @@ export default function HomeScreen() {
               showsVerticalScrollIndicator={false}
             />
           ) : (
-            /* Message List */
             <FlatList
               style={{ flex: 1 }}
               ref={flatListRef}
@@ -221,7 +212,6 @@ export default function HomeScreen() {
               )}
               ListFooterComponent={
                 isTyping ? (
-                  /* Floating Typing Loader indicator inside Chat List */
                   <View style={styles.messageRow}>
                     <View
                       style={[
@@ -271,7 +261,6 @@ const styles = StyleSheet.create({
     maxWidth: MaxContentWidth,
     alignSelf: "stretch",
   },
-
   keyboardView: {
     flex: 1,
   },

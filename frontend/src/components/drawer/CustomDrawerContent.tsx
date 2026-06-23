@@ -17,7 +17,6 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-// Icon components built using native Views for ultimate compatibility
 const PlusIcon = ({ color }: { color: string }) => (
   <View style={styles.iconContainer}>
     <View style={[styles.plusHorizontal, { backgroundColor: color }]} />
@@ -97,7 +96,6 @@ export default function CustomDrawerContent(props: any) {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-      {/* Upper Section: New Chat & History */}
       <ScrollView
         contentContainerStyle={[
           styles.scrollContent,
@@ -105,14 +103,12 @@ export default function CustomDrawerContent(props: any) {
         ]}
         showsVerticalScrollIndicator={false}
       >
-        {/* Logo / Header */}
         <View style={styles.header}>
           <Text style={[styles.logoText, { color: theme.text }]}>
             VED
           </Text>
         </View>
 
-        {/* New Chat Button */}
         <TouchableOpacity
           style={[
             styles.newChatButton,
@@ -130,7 +126,6 @@ export default function CustomDrawerContent(props: any) {
           </Text>
         </TouchableOpacity>
 
-        {/* Knowledge Base Button */}
         {user && (
           <TouchableOpacity
             style={[
@@ -164,12 +159,9 @@ export default function CustomDrawerContent(props: any) {
           </TouchableOpacity>
         )}
 
-        {/* Chat History Header */}
         <Text style={[styles.sectionHeader, { color: theme.textSecondary }]}>
           Chat History
         </Text>
-
-        {/* Chat List */}
         {chatsLoading ? (
           <ActivityIndicator
             size="small"
@@ -232,7 +224,6 @@ export default function CustomDrawerContent(props: any) {
         )}
       </ScrollView>
 
-      {/* Lower Section: User Details & Logout */}
       <View
         style={[styles.footer, { borderTopColor: theme.backgroundSelected }]}
       >
@@ -435,7 +426,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
 
-  // Icon drawing styles
   iconContainer: {
     width: 18,
     height: 18,
