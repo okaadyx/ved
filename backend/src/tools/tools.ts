@@ -61,9 +61,7 @@ Current weather in ${data.name}, ${data.sys.country}:
                 .describe("Temperature unit to return"),
         }),
     }
-);
-
-const webSearchTool = tool(async({query})=>{
+);const webSearchTool = tool(async ({ query }) => {
     try {
         const apiKey = process.env.TAVILY_API_KEY;
         if (!apiKey) {
@@ -72,22 +70,20 @@ const webSearchTool = tool(async({query})=>{
 
         const tly = tavily({ apiKey });
 
-        const response = await tly.research(query)
+        const response = await tly.search(query);
 
-        return JSON.stringify(response)
+        return JSON.stringify(response);
     } catch (error) {
-        console.log(error);
-        
+        console.error("Web search tool error:", error);
+        return `Error performing web search: ${error instanceof Error ? error.message : String(error)}`;
     }
-},{
-    name:"web_search",
-    description:"Perform web search operation",
-    schema:z.object({
-        query:z.string().describe("The search query to look up on the internet")
+}, {
+    name: "web_search",
+    description: "Perform web search operation on the internet for real-time, current, or latest information.",
+    schema: z.object({
+        query: z.string().describe("The search query to look up on the internet")
     })
-})
-
-
+});
 const calculatorTool = tool(async (input: any) => {
     try {
         const result = evaluate(input.expression);

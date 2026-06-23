@@ -1,9 +1,9 @@
 # 🌌 VED — Enterprise RAG & Mobile AI Assistant Ecosystem
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?style=for-the-badge)](https://github.com/okaadyx/assistent)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?style=for-the-badge)](https://github.com/okaadyx/ved)
 [![License](https://img.shields.io/badge/license-MIT-green.svg?style=for-the-badge)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS%20%7C%20Web-lightgrey.svg?style=for-the-badge)](https://reactnative.dev/)
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg?style=for-the-badge)](https://github.com/okaadyx/assistent/actions)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg?style=for-the-badge)](https://github.com/okaadyx/ved/actions)
 [![TypeScript](https://img.shields.io/badge/TypeScript-6.0.3-blue.svg?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![React Native](https://img.shields.io/badge/React%20Native-0.85.3-61DAFB.svg?style=for-the-badge&logo=react)](https://reactnative.dev/)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933.svg?style=for-the-badge&logo=node.js)](https://nodejs.org/)
@@ -11,20 +11,6 @@
 
 A production-grade, fintech-quality conversational AI ecosystem. VED pairs a cross-platform mobile assistant application built on a premium **Glassmorphism** design system with a high-performance **Retrieval-Augmented Generation (RAG)** LangChain backend.
 
----
-
-```
-__      __  ______  _____  
-\ \    / / |  ____||  __ \ 
- \ \  / /  | |__   | |  | |
-  \ \/ /   |  __|  | |  | |
-   \  /    | |____ | |__| |
-    \/     |______||_____/ 
-                    
-             ENTERPRISE RAG & MOBILE ASSISTANT ECOSYSTEM
-```
-
----
 
 ## 📖 1. Overview
 
@@ -216,8 +202,8 @@ assistent/
 
 ### Clone Repository
 ```bash
-git clone https://github.com/okaadyx/assistent.git
-cd assistent
+git clone https://github.com/okaadyx/ved.git
+cd ved
 ```
 
 ### Install Dependencies
@@ -619,7 +605,7 @@ This project is licensed under the MIT License. See [LICENSE](LICENSE) for more 
 ## 👥 23. Authors & Support
 
 *   **Author**: Aady ([GitHub](https://github.com/okaadyx) | [LinkedIn](https://linkedin.com/in/aady))
-*   **Support**: Report issues or request features by submitting an issue on our [GitHub Tracker](https://github.com/okaadyx/assistent/issues).
+*   **Support**: Report issues or request features by submitting an issue on our [GitHub Tracker](https://github.com/okaadyx/ved/issues).
 
 ---
 
