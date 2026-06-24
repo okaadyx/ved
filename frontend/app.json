@@ -2,7 +2,7 @@
   "expo": {
     "name": "VED",
     "slug": "ved",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "ved",
@@ -12,6 +12,7 @@
     },
     "android": {
       "package": "com.okaadyx.ved",
+      "versionCode": 2,
       "adaptiveIcon": {
         "backgroundColor": "#09090B",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
