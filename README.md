@@ -608,7 +608,7 @@ This project is licensed under the MIT License. See [LICENSE](LICENSE) for more 
 
 ## 👥 23. Authors & Support
 
-*   **Author**: Aady ([GitHub](https://github.com/okaadyx) | [LinkedIn](https://linkedin.com/in/aady))
+*   **Author**: Aajad Yadav ([Portfolio](https://okaadyx.vercel.app/) | [GitHub](https://github.com/okaadyx) | [LinkedIn](https://www.linkedin.com/in/aajad/))
 *   **Support**: Report issues or request features by submitting an issue on our [GitHub Tracker](https://github.com/okaadyx/ved/issues).
 
 ---
